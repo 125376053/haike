@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>新闻管理</title>
+    <link rel="stylesheet" href="./static/common/layui/css/layui.css">
+    <link rel="stylesheet" href="./static/admin/css/style.css">
+    <script src="./static/common/layui/layui.js"></script>
+    <script src="./static/common/jquery-3.3.1.min.js"></script>
+    <script src="./static/common/vue.min.js"></script>
+    <script src="../view/js/news.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--顶栏-->
+    <header>
+        <h1 v-text="webname"></h1>
+        <div class="breadcrumb">
+            <i class="layui-icon">&#xe715;</i>
+            <ul>
+                <li v-for="vo in address">
+                    <a v-text="vo.name" :href="vo.url"></a> <span>/</span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!--左侧导航-->
+    <div class="main">
+        <!--左栏-->
+        <div class="left">
+            <ul class="cl">
+                <!--顶级分类-->
+                <li v-for="vo,index in menu" :class="{hidden:vo.hidden}">
+                    <a href="javascript:;" :class="{active:vo.active}" @click="onActive(index)">
+                        <i class="layui-icon" v-html="vo.icon"></i>
+                        <span v-text="vo.name"></span>
+                        <i class="layui-icon arrow" v-show="vo.url.length==0">&#xe61a;</i> <i v-show="vo.active"
+                                                                                              class="layui-icon active">&#xe623;</i>
+                    </a>
+                    <!--子级分类-->
+                    <div v-for="vo2,index2 in vo.list">
+                        <a href="javascript:;" :class="{active:vo2.active}" @click="onActive(index,index2)"
+                           v-text="vo2.name"></a>
+                        <i v-show="vo2.active" class="layui-icon active">&#xe623;</i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--右侧-->
+
+    </div>
+
+    <!--右侧内容-->
+    <div class="right">
+        <a class="layui-btn" @click="cleanAndAdd()"><i class="layui-icon">&#xe654;</i>添加</a>
+        <form class="layui-form ">
+            <div class="layui-form-item">
+                <label class="layui-form-label">新闻位置</label>
+                <div class="layui-input-inline" @click="searchType()">
+                    <select id="searchType">
+                        <option value="1">关于海科-奖项荣誉</option>
+                        <option value="2">关于海科-社会责任</option>
+                        <option value="3">关于海科-海科集团战略发展史</option>
+                        <option value="4">智能化建设</option>
+                        <option value="5">国际化管理-卓越运营体系</option>
+
+                        <option value="6">人才招聘-海外人才引进</option>
+                        <option value="7">人才招聘-社会招聘</option>
+                        <option value="8">人才招聘-校园招聘</option>
+                        <option value="61">人才招聘-校园招聘-走进海科</option>
+                        <option value="9">人才招聘-我们的足迹</option>
+                        <option value="10">人才招聘-录用公示</option>
+                        <option value="11">人才招聘-宣讲行程</option>
+                        <option value="12">关于海科-文字介绍</option>
+                        <option value="13">首页-logo</option>
+                        <option value="14">首页-介绍</option>
+                        <option value="34">首页-世界合作</option>
+                        <option value="35">首页-管理体系</option>
+                        <option value="15">人才招聘-成长历程</option>
+                        <option value="16">社会责任</option>
+                        <option value="17">新闻媒体-出版物</option>
+                        <option value="18">新闻媒体-海科视角</option>
+                        <option value="19">海科学院-学院新闻</option>
+
+                        <option value="41">新闻中心简略</option>
+
+
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <!--表格-->
+        <table class="layui-table layui-form">
+            <!--预设列组数据-->
+            <colgroup>
+                <col width="40"><!--每列宽度--><!--新闻位置-->
+                <col width="40"><!--中文标题-->
+                <col width="40"><!--英文标题-->
+                <col width="40"><!--中文内容-->
+                <col width="40"><!--图片-->
+                <col width="40"><!--新闻时间-->
+                <col width="90"><!--状态-->
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+            </colgroup>
+            <!--表头-->
+            <thead>
+            <tr>
+                <th>新闻位置</th>
+                <th>中文标题</th>
+                <th>英文标题</th>
+                <th>中文内容1</th>
+                <th>中文内容2</th>
+                <th>中文内容3</th>
+                <th>中文内容4</th>
+                <th>英文内容1</th>
+                <th>英文内容2</th>
+                <th>英文内容3</th>
+                <th>英文内容4</th>
+                <th>图片</th>
+                <th>新闻时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <!--表体-->
+            <tbody>
+            <tr class="id84" v-for="(vo,index) in newsList">
+                <td>{{ vo.type }}</td>
+                <td>{{ vo.title }}</td>
+                <td>{{ vo.entitle }}</td>
+                <td>{{ vo.context1 }}</td>
+                <td>{{ vo.context2 }}</td>
+                <td>{{ vo.context3 }}</td>
+                <td>{{ vo.context4 }}</td>
+                <td>{{ vo.encontext1 }}</td>
+                <td>{{ vo.encontext2 }}</td>
+                <td>{{ vo.encontext3 }}</td>
+                <td>{{ vo.encontext4 }}</td>
+                <td>{{ vo.imgPath }}</td>
+                <td>{{ vo.time }}</td>
+
+                <td @click="updateState(vo.id,vo.live)">
+                    <input :data-id="vo.id" :data-state="vo.live" lay-filter="state" type="checkbox" checked lay-text="开启|关闭" lay-skin="switch">
+                </td>
+                <td>
+                    <a class="del" data-id=".id84" @click="updateOne(vo)">修改</a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <!--分页-->
+        <div class="page">
+            <ul class="pagination">
+                <li @click="lastPage()"><span>&lt;&lt;</span></li>
+                <li><span>...</span></li>
+                <li @click="nextPage()"><span>&gt;&gt;</span></li>
+            </ul>
+        </div>
+        <!--<div id="test1"></div>-->
+
+    </div>
+
+
+    <!--弹出层内容-->
+    <div id="addNewOne" style="width: 50%;text-align: center;margin: auto;display: none">
+        <form class="layui-form ">
+            <div class="layui-form-item">
+                <label class="layui-form-label">新闻位置</label>
+                <div class="layui-input-inline">
+                    <select id="type">
+                        <option value="1">关于海科-奖项荣誉</option>
+                        <option value="2">关于海科-社会责任</option>
+                        <option value="3">关于海科-海科集团战略发展史</option>
+                        <option value="4">智能化建设</option>
+                        <option value="5">国际化管理-卓越运营体系</option>
+
+                        <option value="6">人才招聘-海外人才引进</option>
+                        <option value="7">人才招聘-社会招聘</option>
+                        <option value="8">人才招聘-校园招聘</option>
+                        <option value="61">人才招聘-校园招聘-走进海科</option>
+                        <option value="9">人才招聘-我们的足迹</option>
+                        <option value="10">人才招聘-录用公示</option>
+                        <option value="11">人才招聘-宣讲行程</option>
+                        <option value="12">关于海科-文字介绍</option>
+                        <option value="13">首页-logo</option>
+                        <option value="14">首页-介绍</option>
+                        <option value="34">首页-世界合作</option>
+                        <option value="35">首页-管理体系</option>
+                        <option value="15">人才招聘-成长历程</option>
+                        <option value="16">社会责任</option>
+                        <option value="17">新闻媒体-出版物</option>
+                        <option value="18">新闻媒体-海科视角</option>
+                        <option value="19">海科学院-学院新闻</option>
+
+                        <option value="41">新闻中心简略</option>
+
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">中文标题</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="title" name="title" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">英文标题</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="entitle" name="entitle" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">新闻时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="time" id="time" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">中文内容1</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="context" id="context1" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">中文内容2</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="context" id="context2" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">中文内容3</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="context" id="context3" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">中文内容4</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="context" id="context4" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">英文内容1</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="encontext1" name="encontext" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">英文内容2</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="encontext2" name="encontext" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">英文内容3</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="encontext3" name="encontext" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">英文内容4</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="encontext4" name="encontext" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片</label>
+                <div class="layui-input-inline">
+                    <input type="file" name="imgPath" data-path="" data-base64="" id="imgPath" onchange="uploadImg() "
+                           placeholder="" autocomplete="off" class="layui-input">
+                    <img id="img" src="" style="display: none">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="moreImg()">添加图片</button>
+                </div>
+            </div>
+
+
+        </form>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" @click="addNews()">立即提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('form', function () {
+        var form = layui.form, layer = layui.layer, $ = layui.jquery;
+
+        /*form.on('switch(state)', function(data) { /!*单选开关*!/
+         var id = $(data.elem).attr("data-id");
+         $.ajax({
+         url: "/admin/article/state.html",
+         data: {
+         id: id,
+         },
+         type: "get",
+         dataType: "json",
+         success: function(e) {
+         if (e.code== 1) {
+         layer.msg(e.msg, {
+         icon: 1
+         });
+         } else {
+         layer.msg(e.msg, {
+         icon: 2,
+         shade: 0.5,
+         time: 2000,
+         shadeClose: true
+         });
+         }
+         }
+         });
+         });*/
+
+        form.on('switch(top)', function (data) {
+            var id = $(data.elem).attr("data-id");
+            $.ajax({
+                url: "/admin/article/top.html",
+                data: {
+                    id: id,
+                },
+                type: "get",
+                dataType: "json",
+                success: function (e) {
+                    if (e.code == 1) {
+                        layer.msg(e.msg, {
+                            icon: 1
+                        });
+                    } else {
+                        layer.msg(e.msg, {
+                            icon: 2,
+                            shade: 0.5,
+                            time: 2000,
+                            shadeClose: true
+                        });
+                    }
+                }
+            });
+        });
+
+        form.on('switch(experiment)', function (data) {
+            var id = $(data.elem).attr("data-id");
+            $.ajax({
+                url: "/admin/article/experiment.html",
+                data: {
+                    id: id,
+                },
+                type: "get",
+                dataType: "json",
+                success: function (e) {
+                    if (e.code == 1) {
+                        layer.msg(e.msg, {
+                            icon: 1
+                        });
+                    } else {
+                        layer.msg(e.msg, {
+                            icon: 2,
+                            shade: 0.5,
+                            time: 2000,
+                            shadeClose: true
+                        });
+                    }
+                }
+            });
+        });
+
+        form.on('switch(works)', function (data) {
+            var id = $(data.elem).attr("data-id");
+            $.ajax({
+                url: "/admin/article/works.html",
+                data: {
+                    id: id,
+                },
+                type: "get",
+                dataType: "json",
+                success: function (e) {
+                    if (e.code == 1) {
+                        layer.msg(e.msg, {
+                            icon: 1
+                        });
+                    } else {
+                        layer.msg(e.msg, {
+                            icon: 2,
+                            shade: 0.5,
+                            time: 2000,
+                            shadeClose: true
+                        });
+                    }
+                }
+            });
+        });
+    });
+
+    /*layui.use('laypage', function(){
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            ,count: 50 //数据总数，从服务端得到
+        });
+    });*/
+</script>
+<script src="./static/admin/js/config.js"></script>
+<script src="./static/admin/js/script.js"></script>
+
+<script type="text/javascript">
+
+    /*var addVue = new Vue({
+     el:'#add',
+     data:{
+     newList:[],
+     path:""
+     },
+     created:function(){/!*vue被创建时候使用  类型/起始行数/查询行数/是否冻结   *!/
+
+
+     }
+
+     })*/
+
+</script>
+</body>
+</html>

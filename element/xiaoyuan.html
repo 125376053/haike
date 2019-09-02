@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>校园招聘</title>
+    <link rel="stylesheet" href="./static/common/layui/css/layui.css">
+    <link rel="stylesheet" href="./static/admin/css/style.css">
+    <script src="./static/common/layui/layui.js"></script>
+    <script src="./static/common/jquery-3.3.1.min.js"></script>
+    <script src="./static/common/vue.min.js"></script>
+    <script src="../view/js/news.js"></script>
+</head>
+<body>
+<!--
+    校园招聘页
+
+    1 招聘岗位
+    招聘流程x
+    2 宣讲会进程
+    3 录用公示
+    4 雇主品牌
+-->
+<div id="app">
+    <!--顶栏-->
+    <header>
+        <h1 v-text="webname"></h1>
+        <div class="breadcrumb">
+            <i class="layui-icon">&#xe715;</i>
+            <ul>
+                <li v-for="vo in address">
+                    <a v-text="vo.name" :href="vo.url"></a>
+                    <span>/</span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!--左侧导航-->
+    <div class="main">
+        <!--左栏-->
+        <div class="left">
+            <ul class="cl">
+                <!--顶级分类-->
+                <li v-for="vo,index in menu">
+                    <a href="javascript:;" :class="{active:vo.active}" @click="onActive(index,vo)">
+                        <i class="layui-icon" v-html="vo.icon"></i>
+                        <span v-text="vo.name"></span>
+                        <i class="layui-icon arrow" v-show="vo.url.length==0">&#xe61a;</i>
+                        <i v-show="vo.active" class="layui-icon active">&#xe623;</i>
+                    </a>
+                    <!--子级分类-->
+                    <div v-for="vo2,index2 in vo.list" v-if="!vo.hidden">
+                        <a href="javascript:;" :class="{active:address[1].name==vo2.name}"
+                           @click="onActive2(index,vo,vo2)" v-text="vo2.name"></a>
+                        <i v-show="vo2.active" class="layui-icon active">&#xe623;</i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--右侧-->
+
+    </div>
+
+    <!--右侧内容-->
+    <div class="right">
+
+
+        <div class="layui-tab" lay-filter="test1">
+            <ul class="layui-tab-title">
+                <li class="layui-this">招聘岗位</li>
+                <li>宣讲会进程</li>
+                <li>录用公示</li>
+                <li>雇主品牌</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+
+                    <a class="layui-btn" @click="add1"><i class="layui-icon">&#xe654;</i>添加</a>
+                    <!--表格-->
+                    <table class="layui-table layui-form">
+                        <!--预设列组数据-->
+                        <colgroup>
+                            <col width="40"><!--每列宽度--><!--新闻位置-->
+                            <col width="40"><!--中文标题-->
+                            <col width="40"><!--英文标题-->
+                            <col width="40"><!--中文内容-->
+                            <col width="40"><!--图片-->
+                            <col width="40"><!--新闻时间-->
+                            <col width="90"><!--状态-->
+                            <col width="40">
+                            <col width="40">
+                            <col width="40">
+                            <col width="40">
+                            <col width="40">
+                            <col width="40">
+                            <col width="40">
+                            <col width="40">
+                        </colgroup>
+                        <!--表头-->
+                        <thead>
+                        <tr>
+                            <th>新闻位置</th>
+                            <th>中文标题</th>
+                            <th>英文标题</th>
+                            <th>中文内容1</th>
+                            <th>中文内容2</th>
+                            <th>中文内容3</th>
+                            <th>中文内容4</th>
+                            <th>英文内容1</th>
+                            <th>英文内容2</th>
+                            <th>英文内容3</th>
+                            <th>英文内容4</th>
+                            <th>图片</th>
+                            <th>新闻时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <!--表体-->
+                        <tbody>
+                        <tr class="id84" v-for="(vo,index) in newsList">
+                            <td>{{ vo.type }}</td>
+                            <td>{{ vo.title }}</td>
+                            <td>{{ vo.entitle }}</td>
+                            <td>{{ vo.context1 }}</td>
+                            <td>{{ vo.context2 }}</td>
+                            <td>{{ vo.context3 }}</td>
+                            <td>{{ vo.context4 }}</td>
+                            <td>{{ vo.encontext1 }}</td>
+                            <td>{{ vo.encontext2 }}</td>
+                            <td>{{ vo.encontext3 }}</td>
+                            <td>{{ vo.encontext4 }}</td>
+                            <td>{{ vo.imgPath }}</td>
+                            <td>{{ vo.time }}</td>
+
+                            <td @click="updateState(vo.id,vo.live)">
+                                <input :data-id="vo.id" :data-state="vo.live" lay-filter="state" type="checkbox" checked
+                                       lay-text="开启|关闭" lay-skin="switch">
+                            </td>
+                            <td>
+                                <a class="del" data-id=".id84" @click="updateOne(vo)">修改</a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <!--分页-->
+                    <div id="test1"></div>
+
+                </div>
+                <div class="layui-tab-item">
+
+                </div>
+                <div class="layui-tab-item">
+
+                </div>
+                <div class="layui-tab-item">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--弹出层内容-->
+    <div id="add1" style="text-align: center;margin: auto;display: none">
+        <form class="layui-form ">
+            <div class="layui-form-item">
+                <label class="layui-form-label">招聘岗位</label>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">id</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">招聘人数</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">月薪</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">年薪</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">学历</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">学历2</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">工作地点</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">工作地点</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="startTime">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">修改时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="updateTime">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="sex" value="nan" title="展示">
+                        <input type="radio" name="sex" value="nv" title="冻结">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">链接</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片</label>
+                <div class="layui-input-inline">
+                    <input type="file" name="imgPath" data-path="" data-base64="" id="imgPath" onchange="uploadImg() "
+                           placeholder="" autocomplete="off" class="layui-input">
+                    <img id="img" src="" style="display: none">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="moreImg()">添加图片</button>
+                </div>
+            </div>
+
+
+        </form>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" @click="addNews()">立即提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./static/admin/js/config.js"></script>
+<!--<script src="./static/admin/js/script.js"></script>-->
+<script>
+    (function () {
+        pathname = window.document.location.pathname
+        pathname = pathname.substr(1, pathname.length)
+        protocol = window.location.origin;
+        if (!protocol) {
+            protocol = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+        }
+        /*path = protocol +"/"+ pathname.substring(0,pathname.indexOf("/"))*/
+        path = protocol
+        console.log("path: " + path)
+    })()
+</script>
+<script src="mxins/index.js"></script>
+<script type="text/javascript">
+
+    new Vue({
+        el: '#app',
+        mixins:[pub],
+        data: {
+            newsList: [],
+            type: 1, //用户选择的类型
+            count: 50, //总条数
+            page:1, //当前页码
+        },
+        mounted(){
+            // 初始化下拉菜单请求列表
+            this.getData()
+            // 初始化请求第一页
+            this.getPage()
+            // 用户选择类型触发请求
+            this.searchType()
+            // tab
+            this.getTable()
+            // 时间
+            this.getTime()
+        },
+        methods: {
+            // 初始请求数据
+            getData(){
+                $.ajax({
+                    //$("#searchType  option:selected").val()
+                    url: path + "/newstype/0/10/" + this.type +  "/"+this.page,
+                    /*data: JSON.stringify(dataNew),*/
+                    type: "get",
+                    headers: {"Content-Type": "application/json;charset=UTF-8"},
+                    dataType: "json",
+                    success: (data) => {
+                        var o = data.resultCode;
+                        console.log(o)
+                        this.newsList = o
+                    }
+                });
+            },
+            // tab
+            getTable(){
+                layui.use('element', ()=>{
+                    var element = layui.element;
+                    //监听Tab切换，以改变地址hash值
+                    element.on('tab(test1)', function(){
+                        console.log(this.innerHTML);
+                    });
+                });
+            },
+            // 时间
+            getTime(){
+                layui.use('laydate', function(){
+                    var laydate = layui.laydate;
+                    //执行一个laydate实例
+                    laydate.render({
+                        elem: '#startTime', //指定元素
+                        ready: function(date){
+                            console.log(date); //得到初始的日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+                        }
+                    });
+                    //执行一个laydate实例
+                    laydate.render({
+                        elem: '#updateTime', //指定元素
+                        ready: function(date){
+                            console.log(date); //得到初始的日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+                        }
+                    });
+                });
+            },
+            // 弹出层
+            add1(){
+                // 清空值
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.open({
+                        type: 1,
+                        area: ['800px', '500px'],
+                        content: $('#add1')
+                    });
+                })
+            },
+            // 选择下拉菜单请求列表
+            searchType(){
+                layui.use('form', () =>{
+                    var form = layui.form;
+                    form.on('select(select)', (data) => {
+                        console.log(data.elem); //得到select原始DOM对象
+                        console.log(data.value); //得到被选中的值
+                        this.type = data.value
+                        this.getData()
+                    });
+                })
+            },
+
+            // 更新状态
+            updateState: function (id, live) {
+                if (live == "0") {
+                    live = "1"
+                } else if (live == "1") {
+                    live = "0"
+                }
+                $.ajax({
+                    url: path + "/news/state/" + id + "/" + live,
+                    type: "get",
+                    dataType: "json",
+                    success: function (data) {
+
+
+                    }
+                });
+            },
+            // 删除
+            delete: function (id) {
+                $.ajax({
+                    url: path + "/news/dalete/" + id,
+                    type: "get",
+                    dataType: "json",
+                    success: function (data) {
+
+                    }
+                });
+            },
+            // 更新一条
+            updateOne: function (vo) {
+                $("#title").val(vo.title)
+                $("#entitle").val(vo.entitle)
+                $("#title").data("id", vo.id)
+                $("#context").val(vo.context)
+                $("#context2").val(vo.context2)
+                $("#context3").val(vo.context3)
+                $("#context4").val(vo.context4)
+                $("#encontext").val(vo.encontext)
+                $("#encontext2").val(vo.encontext2)
+                $("#encontext3").val(vo.encontext3)
+                $("#encontext4").val(vo.encontext4)
+                $("#imgPath").data("path", vo.imgPath)
+                $("#img").show()
+                $("#imgPath").attr("img", vo.imgPath)
+                $("#addNewOne").show()
+            },
+            // 分页
+            getPage(){
+                layui.use('laypage', () => {
+                    var laypage = layui.laypage;
+                    //执行一个laypage实例
+                    laypage.render({
+                        elem: 'test1', //注意，这里的 test1 是 ID，不用加 # 号
+                        count: this.count, //数据总数，从服务端得到
+                        jump: (obj, first) => {
+                            //obj包含了当前分页的所有参数，比如：
+                            console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                            this.page = obj.curr
+                            //console.log(obj.limit); //得到每页显示的条数
+                            //首次不执行
+                            if (!first) {
+                                //do something
+                                this.getData()
+                            }
+                        }
+                    });
+                });
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>校园招聘</title>
+    <link rel="stylesheet" href="./static/common/layui/css/layui.css">
+    <link rel="stylesheet" href="./static/admin/css/style.css">
+    <script src="./static/common/layui/layui.js"></script>
+    <script src="./static/common/jquery-3.3.1.min.js"></script>
+    <script src="./static/common/vue.min.js"></script>
+    <script src="../view/js/news.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--顶栏-->
+    <header>
+        <h1 v-text="webname"></h1>
+        <div class="breadcrumb">
+            <i class="layui-icon">&#xe715;</i>
+            <ul>
+                <li v-for="vo in address">
+                    <a v-text="vo.name" :href="vo.url"></a>
+                    <span>/</span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!--左侧导航-->
+    <div class="main">
+        <!--左栏-->
+        <div class="left">
+            <ul class="cl">
+                <!--顶级分类-->
+                <li v-for="vo,index in menu">
+                    <a href="javascript:;" :class="{active:vo.active}" @click="onActive(index,vo)">
+                        <i class="layui-icon" v-html="vo.icon"></i>
+                        <span v-text="vo.name"></span>
+                        <i class="layui-icon arrow" v-show="vo.url.length==0">&#xe61a;</i>
+                        <i v-show="vo.active" class="layui-icon active">&#xe623;</i>
+                    </a>
+                    <!--子级分类-->
+                    <div v-for="vo2,index2 in vo.list" v-if="!vo.hidden">
+                        <a href="javascript:;" :class="{active:address[1].name==vo2.name}"
+                           @click="onActive2(index,vo,vo2)" v-text="vo2.name"></a>
+                        <i v-show="vo2.active" class="layui-icon active">&#xe623;</i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--右侧-->
+
+    </div>
+
+    <!--右侧内容-->
+    <div class="right">
+
+
+        <a class="layui-btn" @click="add1"><i class="layui-icon">&#xe654;</i>添加</a>
+        <!--表格-->
+        <table class="layui-table layui-form">
+            <!--预设列组数据-->
+            <colgroup>
+                <col width="40"><!--每列宽度--><!--新闻位置-->
+                <col width="40"><!--中文标题-->
+                <col width="40"><!--英文标题-->
+                <col width="40"><!--中文内容-->
+                <col width="40"><!--图片-->
+                <col width="40"><!--新闻时间-->
+                <col width="90"><!--状态-->
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+                <col width="40">
+            </colgroup>
+            <!--表头-->
+            <thead>
+            <tr>
+                <th>新闻位置</th>
+                <th>中文标题</th>
+                <th>英文标题</th>
+                <th>中文内容1</th>
+                <th>中文内容2</th>
+                <th>中文内容3</th>
+                <th>中文内容4</th>
+                <th>英文内容1</th>
+                <th>英文内容2</th>
+                <th>英文内容3</th>
+                <th>英文内容4</th>
+                <th>图片</th>
+                <th>新闻时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <!--表体-->
+            <tbody>
+            <tr class="id84" v-for="(vo,index) in newsList">
+                <td>{{ vo.type }}</td>
+                <td>{{ vo.title }}</td>
+                <td>{{ vo.entitle }}</td>
+                <td>{{ vo.context1 }}</td>
+                <td>{{ vo.context2 }}</td>
+                <td>{{ vo.context3 }}</td>
+                <td>{{ vo.context4 }}</td>
+                <td>{{ vo.encontext1 }}</td>
+                <td>{{ vo.encontext2 }}</td>
+                <td>{{ vo.encontext3 }}</td>
+                <td>{{ vo.encontext4 }}</td>
+                <td>{{ vo.imgPath }}</td>
+                <td>{{ vo.time }}</td>
+
+                <td @click="updateState(vo.id,vo.live)">
+                    <input :data-id="vo.id" :data-state="vo.live" lay-filter="state" type="checkbox" checked
+                           lay-text="开启|关闭" lay-skin="switch">
+                </td>
+                <td>
+                    <a class="del" data-id=".id84" @click="updateOne(vo)">修改</a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <!--分页-->
+        <div id="test1"></div>
+
+        <!--/growthProcess/list/{page}/{row}-->
+        <div id="demo"></div>
+
+    </div>
+
+
+    <!--弹出层内容-->
+    <div id="add1" style="text-align: center;margin: auto;display: none">
+        <form class="layui-form" autocomplete="off">
+            <div class="layui-form-item">
+                <label class="layui-form-label">成长历程</label>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-inline">
+                        <textarea style="height:100px!important;" lay-verify="required" v-model="content" type="text"
+                                  name="title" placeholder="" autocomplete="off" class="layui-input"></textarea>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">上传路径</label>
+                    <button type="button" class="layui-btn" id="upload1">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                    <div class="layui-input-inline" style="width: 385px;">
+                        <input lay-verify="required" type="text" v-model="imgPath" name="title" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-inline">
+                        <input lay-verify="required" type="text" v-model="title" name="title" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-inline">
+                        <input lay-verify="required" type="text" class="layui-input" id="startTime">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">状态</label>
+                    <!--lay-filter="radio"-->
+                    <div class="layui-input-inline">
+                        <input type="radio" name="sex" value="0" title="展示" checked>
+                        <input type="radio" name="sex" value="1" title="冻结">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <a class="layui-btn" @click="addNews">立即提交</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="./static/admin/js/config.js"></script>
+<!--<script src="./static/admin/js/script.js"></script>-->
+<script>
+    (function () {
+        pathname = window.document.location.pathname
+        pathname = pathname.substr(1, pathname.length)
+        protocol = window.location.origin;
+        if (!protocol) {
+            protocol = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+        }
+        /*path = protocol +"/"+ pathname.substring(0,pathname.indexOf("/"))*/
+        window.path = protocol
+        console.log("path: " + path)
+    })()
+</script>
+<script src="mxins/index.js"></script>
+<script type="text/javascript">
+
+    new Vue({
+        el: '#app',
+        mixins: [pub],
+        data: {
+            content: '',
+            imgPath: '',
+            title: '',
+            time: '',
+            live: '0',
+            newsList: [],
+            count: 50, //总条数
+            page: 1, //当前页码
+            pageCount:10 //每页条数
+        },
+        mounted(){
+            // 初始化下拉菜单请求列表
+            this.getData()
+            // 时间
+            this.getTime()
+            // 上传图片
+            this.upload()
+            // 单选框
+            this.getRadio()
+        },
+        methods: {
+            // 初始请求数据
+            getData(){
+                layui.use('table', ()=>{
+                    var table = layui.table;
+                    //第一个实例
+                    table.render({
+                        elem: '#demo',
+                        height: 312,
+                        /*parseData: function(res){ //res 即为原始返回的数据
+                            return {
+                                "code": res.status, //解析接口状态
+                                "msg": res.message, //解析提示文本
+                                "count": res.total, //解析数据长度
+                                "data": res.data.item //解析数据列表
+                            };
+                        },*/
+                        url: api+`/growthProcess/list/${this.page}/${this.pageCount}`, //数据接口
+                        page: true, //开启分页
+                        cols: [
+                            //表头
+                            [
+                                {field: 'id', title: 'ID', width:80},
+                                {field: 'content', title: '内容', width:80},
+                                {field: 'imgPath', title: '图片地址', width:80},
+                                {field: 'live', title: '状态', width:80},
+                                {field: 'time', title: '创建时间', width: 177},
+                                {field: 'title', title: '标题', width: 80},
+                            ]
+                        ]
+                    });
+
+                });
+            },
+            // 时间
+            getTime(){
+                layui.use('laydate', () => {
+                    var laydate = layui.laydate;
+                    //执行一个laydate实例
+                    laydate.render({
+                        elem: '#startTime', //指定元素
+                        format: 'yyyy-MM-dd HH:mm:ss', //可任意组合
+                        done:(value,date)=>{
+                            console.log(value);
+                            this.time = value
+                        },
+                    });
+                });
+            },
+            // radio
+            getRadio(){
+                layui.use('form', () => {
+                    var form = layui.form
+                    form.on('radio', (data) => {
+                        console.log(data.elem); //得到radio原始DOM对象
+                        console.log(data.value); //被点击的radio的value值
+                        this.live = data.value
+                        console.log(this.live);
+                    });
+                });
+            },
+            // 弹出层
+            add1(){
+                // 清空值
+                layui.use('layer', () => {
+                    var layer = layui.layer;
+                    layer.open({
+                        type: 1,
+                        area: ['800px', '500px'],
+                        content: $('#add1')
+                    });
+                })
+            },
+            // 上传图片
+            upload(){
+                layui.use('upload', function () {
+                    var upload = layui.upload;
+                    //执行实例
+                    var uploadInst = upload.render({
+                        elem: '#upload1', //绑定元素
+                        url: api+'/growthProcess/upload/img/', //上传接口
+                        done: function (res) {
+                            console.log(res);
+                            //上传完毕回调
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            //请求异常回调
+                        }
+                    });
+                });
+            },
+            // 添加数据
+            addNews(){
+                if(this.content == ''){
+                    layer.msg('内容不能为空', {
+                        icon: 1,
+                        time: 2000
+                    });
+                }else if(this.imgPath==''){
+                    layer.msg('图片路径不能为空', {
+                        icon: 1,
+                        time: 2000
+                    });
+                }else if(this.title == ''){
+                    layer.msg('标题不能为空', {
+                        icon: 1,
+                        time: 2000
+                    });
+                }else if(this.time == ''){
+                    layer.msg('创建时间不能为空', {
+                        icon: 1,
+                        time: 2000
+                    });
+                }else{
+                    var dataNew = {
+                        content: this.content,
+                        imgPath: this.imgPath,
+                        title: this.title,
+                        time: this.time,
+                        live: this.live
+                    }
+                    console.log(dataNew);
+                    $.ajax({
+                        url: api + "/growthProcess/insert",
+                        data: JSON.stringify(dataNew),
+                        type: "post",
+                        headers: {"Content-Type": "application/json;charset=UTF-8"},
+                        dataType: "json",
+                        success: (data) => {
+                            console.log(data);
+                        }
+                    });
+
+                    layer.closeAll();
+                }
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

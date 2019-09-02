@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>管理员登陆 - 海科管理平台</title>
+    <link rel="stylesheet" href="./static/common/layui/css/layui.css">
+    <link rel="stylesheet" href="./static/admin/css/login.css">
+    <script src="./static/common/layui/layui.js"></script>
+</head>
+
+<body id="login">
+<div class="login">
+    <h2>海科管理平台</h2>
+    <form class="layui-form" method="post" target="_blank" action="">
+        <div class="layui-form-item">
+            <input type="username" id = "username" name="user" placeholder="用户名" class="layui-input">
+            <i class="layui-icon input-icon">&#xe66f;</i>
+        </div>
+        <div class="layui-form-item">
+            <input type="password" id = "pwd" name="pwd" placeholder="密码"  class="layui-input">
+            <i class="layui-icon input-icon">&#xe673;</i>
+        </div>
+        <div class="layui-form-item">
+            <input type="checkbox" name="box" lay-skin="primary" title="记住密码" checked=""> <a class="back" href="javascript:;"  style="margin-top: 10px">忘记密码</a>
+        </div>
+        <div class="layui-form-item">
+            <button style="width: 100%" class="layui-btn" lay-submit lay-filter="login">立即登录</button>
+
+        </div>
+    </form>
+
+    <script>
+        (function(){
+            pathname = window.document.location.pathname
+            pathname = pathname.substr(1,pathname.length)
+            protocol  =window.location.origin;
+            if (!protocol) {
+                protocol = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+            }
+            /*path = protocol +"/"+ pathname.substring(0,pathname.indexOf("/"))*/
+            path = protocol
+            console.log("path: "+path)
+
+        })()
+
+        layui.use('form', function () {
+            var form = layui.form,
+                layer = layui.layer,
+                $ = layui.jquery;
+
+
+           /* layer.tips('无需输入,请点击登录进入后台<br/>这个tips可随时去除!', '.layui-btn', {
+                tips: [3, '#333'],
+                time: 0
+            });*/
+
+            form.on('submit(login)', function (data) {//这里的login应该是lay-filter="login"
+                sessionStorage.isLgoin = 1; //模拟登录状态,实际使用时请删除掉
+
+               /* layer.load({
+                    shade: 0.5,
+                    time: 0,
+                });
+                setTimeout(function () {
+                    window.location.href = 'index.html';
+                },1000)*/
+                var paramData  ={"username":$("#username").val(),"password":$("#pwd").val()}
+                $.ajax({
+                    url:path + "/user/login",
+                    type:"POST",
+                    headers:{"Content-Type":"application/json;charset=UTF-8"},
+                    data:JSON.stringify(paramData),
+                    dataType:"json",
+                    timeout : 15000,//设置超时,同时可变参数的存活时间只有15
+                    error:function (data) {
+                        console.log(data)
+                    },
+                    success:function (data) {
+                        console.log(data)
+                        if(data.resultCode =="400"){
+                            window.location.href = path+'/manage/index.html';
+                        }
+                    }
+
+                })
+
+
+                return false;
+            });
+        });
+    </script>
+</div>
+</body>
+
+</html>

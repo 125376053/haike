@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>新闻管理</title>
+    <link rel="stylesheet" href="./static/common/layui/css/layui.css">
+    <link rel="stylesheet" href="./static/admin/css/style.css">
+    <link rel="stylesheet" href="static/wangEditor/wangEditor.css">
+    <script src="./static/common/layui/layui.js"></script>
+    <script src="./static/common/jquery-3.3.1.min.js"></script>
+    <script src="./static/common/vue.min.js"></script>
+    <script src="static/wangEditor/wangEditor.js"></script>
+
+
+</head>
+<body>
+<div id="app">
+    <!--顶栏-->
+    <header>
+        <h1 v-text="webname"></h1>
+        <div class="breadcrumb">
+            <i class="layui-icon">&#xe715;</i>
+            <ul>
+                <li v-for="vo in address">
+                    <a v-text="vo.name" :href="vo.url"></a> <span>/</span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="main">
+        <!--左栏-->
+        <div class="left">
+            <ul class="cl">
+                <!--顶级分类-->
+                <li v-for="vo,index in menu" :class="{hidden:vo.hidden}">
+                    <a href="javascript:;" :class="{active:vo.active}" @click="onActive(index)">
+                        <i class="layui-icon" v-html="vo.icon"></i>
+                        <span v-text="vo.name"></span>
+                        <i class="layui-icon arrow" v-show="vo.url.length==0">&#xe61a;</i> <i v-show="vo.active"
+                                                                                              class="layui-icon active">&#xe623;</i>
+                    </a>
+                    <!--子级分类-->
+                    <div v-for="vo2,index2 in vo.list">
+                        <a href="javascript:;" :class="{active:vo2.active}" @click="onActive(index,index2)"
+                           v-text="vo2.name"></a>
+                        <i v-show="vo2.active" class="layui-icon active">&#xe623;</i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--右侧-->
+
+    </div>
+</div>
+<!------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------->
+<div id="product">
+    <div class="right">
+
+        <div class="layui-btn" @click="addProduct"><i class="layui-icon">&#xe654;</i>打开编辑区</div>
+
+        <table class="layui-table layui-form">
+            <colgroup><!--预设列组数据-->
+                <col width="100"><!--新闻位置-->
+                <col width="100"><!--中文标题-->
+                <col width="100"><!--英文标题-->
+                <col width="100"><!--中文内容-->
+                <col width="100"><!--英文内容-->
+
+                <col width="90"><!--操作-->
+
+            </colgroup>
+            <thead><!--表头-->
+            <tr>
+                <th>新闻位置</th>
+                <th>中文标题</th>
+                <th>英文标题</th>
+                <th>中文内容</th>
+                <th>英文内容</th>
+                <th>新闻时间</th>
+            </tr>
+            </thead>
+            <tbody><!--表体-->
+            <tr class="id84" v-for="(vo,index) in plist">
+                <td>{{ vo.par }}</td>
+                <td>{{ vo.title }}</td>
+                <td>{{ vo.entitle }}</td>
+                <td>{{ vo.newcontext }}</td>
+                <td>{{ vo.encontext }}</td>
+                <td>{{ vo.time }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+        <!--<div class="page">
+            <ul class="pagination">
+                <li @click="lastPage()"><span>&lt;&lt;</span></li>
+                <li><span>...</span></li>
+                <li @click="nextPage()"><span>&gt;&gt;</span></li>
+            </ul>
+        </div>-->
+
+    </div>
+
+    <!------------------------------------------------------------------------------------>
+    <div id="adddiv" style="width: 80%;margin-left: 200px;margin-top: 50px;display: none">
+        <form class="layui-form ">
+            <div class="layui-form-item">
+                <label class="layui-form-label">新闻位置</label>
+                <div class="layui-input-inline">
+                    <select id="type">
+                        <option value="1">关于海科-奖项荣誉</option>
+                        <option value="2">关于海科-社会责任</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">中文标题</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="title" name="title" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">英文标题</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="entitle" name="entitle" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </form>
+        <div id="editor"></div>
+        <div id="eneditor"></div>
+        <!-- <button id="editorSetBtn">设置内容</button>-->
+
+
+        <div style="margin-left: 50%" id="editorGetBtn1" class="layui-btn" @click="submitThis()"><i class="layui-icon">&#xe654;</i>点击提交
+        </div>
+        <!--  <button id="editorGetBtn2">获取内容2</button>-->
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        var E = window.wangEditor;
+        //这里的id为<div id="editor"中的id.
+        var editor = new E('#editor');
+
+        // 配置服务器端地址,也就是controller的请求路径，不带项目路径，前面没有/
+        editor.customConfig.uploadImgServer = path + '/upload/editor/img';
+        //配置属性名称，绑定请求的图片数据
+        //controller会用到，可以随便设置，但是一定要与controller一致
+        editor.customConfig.uploadFileName = 'img';
+        //创建编辑器
+        editor.create();
+        window.editor = editor
+        $("#editorSetBtn").click(function () {
+            //这是设置编辑器内容
+            editor.txt.html("请添加新闻");
+        })
+        $("#editorGetBtn1").click(function () {
+            //获取编辑器的内容，带样式
+            //一般使用这个获取数据，通过ajax发送给服务端　，然后服务端以Ｓtring接收，保存到数据库．
+            editor.txt.html()
+        })
+        $("#editorGetBtn2").click(function () {
+            //获取编辑器的内容，不带样式，纯文本
+            alert(editor.txt.text());
+        })
+    })
+</script>
+
+
+<script>
+
+
+</script>
+<script src="./static/admin/js/config.js"></script>
+<script src="./static/admin/js/script.js"></script>
+<script src="../view/js/newEditor.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

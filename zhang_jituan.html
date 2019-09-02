@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>关于海科-集团介绍</title>
+    <link rel="stylesheet" href="./static/common/layui/css/layui.css">
+    <link rel="stylesheet" href="./static/admin/css/style.css">
+    <!--<script src="./static/common/layui/layui.js"></script>-->
+    <script src="./static/common/jquery-3.3.1.min.js"></script>
+    <script src="./element/vue.js"></script>
+    <!-- 引入样式 -->
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link rel="stylesheet" href="./element/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+    <script src="./element/element.js"></script>
+
+
+    <script src="../view/js/news.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--顶栏-->
+    <header>
+        <h1 v-text="webname"></h1>
+        <div class="breadcrumb">
+            <i class="layui-icon">&#xe715;</i>
+            <ul>
+                <li v-for="vo,index in address">
+                    <a v-text="vo.name" :href="vo.url"></a>
+                    <span v-if="index==0">/</span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!--左侧导航-->
+    <div class="main">
+        <!--左栏-->
+        <div class="left">
+            <ul class="cl">
+                <!--顶级分类-->
+                <li v-for="vo,index in menu">
+                    <a href="javascript:;" :class="{active:vo.active}" @click="onActive(index,vo)">
+                        <i class="layui-icon" v-html="vo.icon"></i>
+                        <span v-text="vo.name"></span>
+                        <i class="layui-icon arrow" v-show="vo.url.length==0">&#xe61a;</i>
+                        <i v-show="vo.active" class="layui-icon active">&#xe623;</i>
+                    </a>
+                    <!--子级分类-->
+                    <div v-for="vo2,index2 in vo.list" v-if="!vo.hidden">
+                        <a href="javascript:;" :class="{active:address[1].name==vo2.name}"
+                           @click="onActive2(index,vo,vo2)" v-text="vo2.name"></a>
+                        <i v-show="vo2.active" class="layui-icon active">&#xe623;</i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--右侧-->
+
+    </div>
+
+    <!--右侧内容-->
+    <div class="right">
+
+        <!--添加弹出-->
+        <a class="layui-btn" @click="add1"><i class="layui-icon">&#xe654;</i>添加</a>
+
+        <!--查询-->
+        <!--<el-input placeholder="请输入搜索内容" v-model="search" style="width:300px;float:right;overflow: hidden;">
+            <el-button slot="append" icon="el-icon-search" @click="searchFn"></el-button>
+        </el-input>-->
+        <!--表格-->
+        <el-table
+                :data="newsList"
+                style="width: 100%">
+            <el-table-column
+                    prop="content"
+                    label="内容"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>
+
+            <el-table-column
+                    prop="time"
+                    label="创建时间"
+                    :show-overflow-tooltip="true"
+            >
+                <template slot-scope="scope">
+                    {{date(scope.row.time)}}
+                </template>
+            </el-table-column>
+
+            <el-table-column
+                    label="操作"
+                    width="200px"
+            >
+                <template slot-scope="scope">
+                    <el-button size="mini" @click="edit(scope.row)">编辑</el-button>
+                    <el-button size="mini" @click="remove(scope.row.id)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <!--分页-->
+        <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="count"
+                @current-change="pageChange"
+        >
+        </el-pagination>
+
+    </div>
+
+
+    <!--新建-->
+    <el-dialog title="新建" :visible.sync="dialogVisible" width="800px">
+        <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+
+            <el-form-item label="内容" prop="content">
+                <div id="eneditor"></div>
+            </el-form-item>
+
+            <el-form-item label="创建时间" prop="time">
+                <el-date-picker
+                        type="datetime"
+                        placeholder="选择日期"
+                        v-model="ruleForm.time"
+                        @change="changeTime"
+                        value-format="yyyy-MM-dd HH:MM:SS"
+                ></el-date-picker>
+            </el-form-item>
+
+
+            <el-form-item label="备注" prop="comment" >
+                <el-input type="textarea" v-model="ruleForm.comment"></el-input>
+            </el-form-item>
+
+            <el-form-item prop="live">
+                <el-radio v-model="ruleForm.live" label="0">展示</el-radio>
+                <el-radio v-model="ruleForm.live" label="1">冻结</el-radio>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            </el-form-item>
+
+        </el-form>
+    </el-dialog>
+
+    <!--编辑-->
+    <el-dialog title="编辑" :visible.sync="dialogVisible1" width="800px">
+        <el-form :model="editObj" ref="editForm" label-width="100px" class="demo-ruleForm">
+
+            <el-form-item label="内容" prop="content">
+                <div id="eneditor2"></div>
+            </el-form-item>
+
+            <el-form-item label="创建时间" prop="time">
+                <el-date-picker
+                        type="datetime"
+                        placeholder="选择日期"
+                        v-model="editObj.time"
+                        @change="changeTime"
+                        value-format="yyyy-MM-dd HH:MM:SS"
+                ></el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="备注" prop="comment" >
+                <el-input type="textarea" v-model="editObj.comment"></el-input>
+            </el-form-item>
+
+            <el-form-item prop="live">
+                <el-radio v-model="editObj.live" label="0">展示</el-radio>
+                <el-radio v-model="editObj.live" label="1">冻结</el-radio>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="update('ruleForm')">确认更新</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
+
+</div>
+<script src="./static/admin/js/config.js"></script>
+<script src="mxins/index.js"></script>
+<script src="static/wangEditor/wangEditor2.js"></script>
+<script type="text/javascript">
+
+    new Vue({
+        el: '#app',
+        mixins: [pub],
+        data: {
+            newsList: [
+                {
+                    time: '2016-05-03',
+                    title: '王小虎',
+                    content: '上海市普陀区金沙江路 1516 弄',
+                    imgPath:'www.baidu.com',
+                    detail:'<p>123</p>',
+                    selectOtherShow:'3',
+                    live: '0',// 0展示绿色 1 冻结红色
+                }
+            ],
+            ruleForm: {
+                content:'',
+                comment:'',
+                time:new Date(),//new Date(),
+                live: '1',// 0展示绿色 1 冻结红色
+            },
+            // 编辑对象 --- 编辑与新建不能使用同一套验证规则和字段 会引起意外
+            editObj: {
+                content:'',
+                comment:'',
+                time:new Date(),//new Date()
+                live: '1',// 0展示绿色 1 冻结红色
+            },
+        },
+        mounted(){
+            // 初始化下拉菜单请求列表
+            this.getData()
+        },
+        methods: {
+            // 初始请求数据
+            getData(){
+                $.ajax({
+                    url: api+`/groupIntroduction/list/${this.page}/${this.pageCount}`, //数据接口
+                    success:(res)=>{
+                        console.log(typeof res);
+                        var obj = JSON.parse(res);
+                        console.log(obj);
+                        this.newsList = obj.data.rows
+                        this.count = obj.data.total
+                    }
+                })
+            },
+            // 搜索
+            searchFn(){
+                $.ajax({
+                    url: api + "/groupIntroduction/query/"+this.search,
+                    success: (data) => {
+                        console.log(data);
+                        this.getData()
+                    }
+                });
+            },
+            // 添加数据
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        var dataNew = {
+                                ...this.ruleForm,
+                            content:this.eneditor.txt.html()
+                        }
+                        console.log(dataNew);
+                        $.ajax({
+                            url: api + "/groupIntroduction/insert",
+                            data: JSON.stringify(dataNew),
+                            type: "post",
+                            contentType:'text/plain;charset=UTF-8',
+                            success: (data) => {
+                                console.log(data);
+                                this.getData()
+                            }
+                        });
+                        this.dialogVisible = false
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            // 编辑更新数据
+            update(){
+                this.$refs['editForm'].validate((valid) => {
+                    if (valid) {
+                        var dataNew = {
+                                ...this.editObj,
+                            content:this.eneditor.txt.html()
+                        }
+                        console.log(dataNew);
+                        $.ajax({
+                            url: api + "/groupIntroduction/update",
+                            data: JSON.stringify(dataNew),
+                            type: "post",
+                            contentType:'text/plain;charset=UTF-8',
+                            success: (data) => {
+                                console.log(data);
+                                this.getData()
+                            }
+                        });
+                        this.dialogVisible1 = false
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            // 删除数据
+            remove(id){
+                this.$confirm('确认删除吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    $.ajax({
+                        url: api + "/groupIntroduction/delete/"+id,
+                        success: (data) => {
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                            console.log(data);
+                            this.getData()
+                        }
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            }
+        }
+    })
+
+</script>
+</body>
+</html>
