@@ -1,0 +1,103 @@
+{live}传0 表示未冻结的
+{page}/{rows}不能为空
+
+xxxxxxxxxxxxxxxxx首页
+
+首页所有banner、人才招聘、社会招聘、海科学院   selectAddr;// 1--首页  2--人才招聘  3--社会招聘 4--海科学院
+bannerShow/frontEndList/{page}/{rows}/{live}/{selectAddr}
+----------------------------------------------------------------------
+//公司介绍
+introduction/frontEndList/{page}/{rows}/{live}
+---
+//logo 3+2
+logo/frontEndList/{page}/{rows}/{live}
+---
+//管理与体系
+managementAndSystem/frontEndList/{page}/{rows}/{live}
+---
+//世界级外脑合作
+worldCooperation/frontEndList/{page}/{rows}/{live}
+---
+//视频  {otherShow}//选择  1-首页；2--海科视角-新闻媒体-宣传片 3--人才招聘-海外人才招进 4--人才招聘-校园招聘
+haikeVideo/frontEndList/{page}/{rows}/{live}/{otherShow}
+---
+xxxxxxxxxxxxxxxxxx招聘
+
+//校园招聘--宣讲会行程
+campuSeminar/frontEndList/{page}/{rows}/{live}
+--------------------------------------------------------
+//校园招聘--录用公示
+campusEmployerBrand/frontEndList/{page}/{rows}/{live}
+----------------------------------------------------------
+//社会招聘/校园招聘 {type} 1--社会招聘，2--学校招聘
+socialOrCampusRecruitment/frontEndList/{page}/{rows}/{live}/{type}
+-----------------------------------------------------------
+// 校园招聘---雇主品牌 ----并入新闻中心 newsCenter
+------------------------------------------
+
+//校园招聘--走进海科
+campusgohaike/frontEndList/{page}/{rows}/{live}
+---------------------------------------------------------
+
+//海外人才引进-------------招聘岗位
+overseasTalent/frontEndList/{page}/{rows}/{live}
+---------------------------------------------------
+//海外人才引进------------------我们的足迹
+footprint/frontEndList/{page}/{rows}/{live}
+------------------------------------------------
+
+//成长历程
+growthProcess/frontEndList/{page}/{rows}/{live}
+-------------------------------------------------
+
+xxxxxxxxxxxxxxxxxxxxxxxx国际化
+
+//卓越运营体系
+operatingSystem/frontEndList/{page}/{rows}/{live}
+-------------------------------------------
+//国际化管理--安全管理
+safetyManagement/frontEndList/{page}/{rows}/{live}
+-------------------------------------------------
+//智能建设化成果
+constructionResult/frontEndList/{page}/{rows}/{live}
+//智能化建设  1--智能应用，2--自主研发，3--聚焦发展，4--遇见未来
+intelligentConstruction/frontEndList/{live}/{selectTitle}
+-----------------------------------------------------------
+
+xxxxxxxxxxxxxxxxxxxxxxxxx关于海科
+//集团介绍
+groupIntroduction/frontEndList/{page}/{rows}/{live}
+------------------------------------------------------
+//荣誉奖项
+honorAward/frontEndList/{page}/{rows}/{live}
+----------------------------------------------------
+//战略阻止-海科发展里程碑
+haikeMileage/frontEndList/{page}/{rows}/{live}
+----------------------------------------------------
+// 社会责任 并入 新闻中心
+newsCenter/frontEndList/{page}/{rows}/{live}/{selectOtherShow=3}
+---------------------------------------------------
+
+
+//产业布局-------------是啥？？？？医药？？？
+industrialDistribution/frontEndList/{page}/{rows}/{live}
+
+
+
+//联系我们
+constructionResult/frontEndList/{live}
+
+
+//新闻中心  {selectOtherShow} 1--学院新闻  2--人才招聘-雇主品牌，3--关于海科-社会责任 0--代表新闻中心调用此接口
+newsCenter/frontEndList/{page}/{rows}/{live}/{selectOtherShow}
+---------------------------------------------------------------------
+
+//新闻详情
+newsCenter/frontEndDetail/{id}
+
+
+
+
+
+
+
