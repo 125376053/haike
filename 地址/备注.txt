@@ -1,0 +1,8 @@
+实体名，第一个字母小写，比如BannerShow 实体，接口就是bannerShow/list/{page}/{rows} 添加（insert）、更新（update）、删除（/delete/{id}）、查询单个（/query/{id}）都是
+
+
+fadeInUp animated-fast
+
+关于海科---社会责任 实体----移入到新闻中心
+海科视角----多媒体----宣传-------------------移入到首页相关视频
+相关视频 首页 宣传片 人才招聘的只是banner中的视频
