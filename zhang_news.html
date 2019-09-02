@@ -75,6 +75,16 @@
         <el-table
                 :data="newsList"
                 style="width: 100%">
+
+            <el-table-column
+                prop="selectOtherShow"
+                label="类型"
+            >
+                <template slot-scope="scope">
+                    {{scope.row.selectOtherShow==1?'学院新闻':scope.row.selectOtherShow==2?'雇主品牌':scope.row.selectOtherShow==3?'社会责任':'新闻中心'}}
+                </template>
+            </el-table-column>
+
             <el-table-column
                     prop="content"
                     label="内容"
@@ -146,7 +156,7 @@
                 <el-input type="textarea" v-model="ruleForm.introduction"></el-input>
             </el-form-item>
 
-            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: false, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -171,7 +181,7 @@
 
             <el-form-item label="类型" prop="selectOtherShow">
                 <el-select v-model="ruleForm.selectOtherShow" placeholder="请选择">
-                    <el-option label="新闻中心的新闻" value="0"></el-option>
+                    <el-option label="新闻中心" value="0"></el-option>
                     <el-option label="学院新闻" value="1"></el-option>
                     <el-option label="雇主品牌" value="2"></el-option>
                     <el-option label="社会责任" value="3"></el-option>
@@ -216,7 +226,7 @@
                 <el-input type="textarea" v-model="editObj.introduction"></el-input>
             </el-form-item>
 
-            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: false, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'blur'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -241,7 +251,7 @@
 
             <el-form-item label="类型" prop="selectOtherShow">
                 <el-select v-model="editObj.selectOtherShow" placeholder="请选择">
-                    <el-option label="新闻中心的新闻" value="0"></el-option>
+                    <el-option label="新闻中心" value="0"></el-option>
                     <el-option label="学院新闻" value="1"></el-option>
                     <el-option label="雇主品牌" value="2"></el-option>
                     <el-option label="社会责任" value="3"></el-option>
