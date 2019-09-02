@@ -183,8 +183,10 @@ var pub = {
             this.dialogVisible = true
             this.$nextTick(()=>{
                 if($('#eneditor').length>0){
+                    if(this.eneditor){
+                        this.eneditor.txt.html('')
+                    }
                     this.showEditor('#eneditor')
-                    this.eneditor.txt.html('')
                 }
                 this.$refs.ruleForm.resetFields()
             })

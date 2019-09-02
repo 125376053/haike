@@ -135,7 +135,7 @@
                 <el-input type="text" v-model="ruleForm.title"></el-input>
             </el-form-item>
 
-            <el-form-item label="图片路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -193,7 +193,7 @@
                 <el-input type="text" v-model="editObj.title"></el-input>
             </el-form-item>
 
-            <el-form-item label="图片路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -300,6 +300,13 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        if(this.eneditor.txt.text()==''){
+                            this.$message({
+                                type:'error',
+                                message:'编辑器内容不能为空'
+                            })
+                            return
+                        }
                         var dataNew = {
                             ...this.ruleForm,
                         }
@@ -325,6 +332,13 @@
             update(){
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
+                        if(this.eneditor.txt.text()==''){
+                            this.$message({
+                                type:'error',
+                                message:'编辑器内容不能为空'
+                            })
+                            return
+                        }
                         var dataNew = {
                             ...this.editObj,
                             //content:this.eneditor.txt.html()

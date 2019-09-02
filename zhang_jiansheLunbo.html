@@ -135,7 +135,7 @@
             </el-form-item>
 
 
-            <el-form-item label="图片" prop="imgPath" :rules="[{ required: false, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -191,7 +191,7 @@
             </el-form-item>
 
 
-            <el-form-item label="图片" prop="imgPath" :rules="[{ required: false, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"

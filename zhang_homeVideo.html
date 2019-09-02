@@ -75,13 +75,20 @@
         <el-table
                 :data="newsList"
                 style="width: 100%">
-            <!--<el-table-column
+            <el-table-column
                     prop="selectOtherShow"
                     label="显示位置"
                     width="180"
                     :show-overflow-tooltip="true"
             >
-            </el-table-column>-->
+                <template slot-scope="scope">
+                    <!--1-首页；
+	2--海科视角-新闻媒体-宣传片----------已经单独做了一个页面了
+	3--人才招聘-海外人才招进  --------------banner上的
+	4--人才招聘-校园招聘 --------------banner上的-->
+                    {{scope.row.selectOtherShow==1?'首页':scope.row.selectAddr==2?'海科视角-新闻媒体-宣传片':scope.row.selectAddr==3?'人才招聘-海外人才招进':'人才招聘-校园招聘'}}
+                </template>
+            </el-table-column>
             <el-table-column
                     prop="title"
                     label="标题"
@@ -143,7 +150,7 @@
                 <el-input type="text" v-model="ruleForm.title"></el-input>
             </el-form-item>
 
-            <el-form-item label="视频路径" prop="videoPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="视频路径" prop="videoPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         style="width:500px;"
                         v-model="ruleForm.videoPath"
@@ -206,7 +213,7 @@
                 <el-input type="text" v-model="editObj.title"></el-input>
             </el-form-item>
 
-            <el-form-item label="视频路径" prop="videoPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="视频路径" prop="videoPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'change'}]">
                 <el-input
                         style="width:500px;"
                         v-model="editObj.videoPath"

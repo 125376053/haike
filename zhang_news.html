@@ -156,7 +156,7 @@
                 <el-input type="textarea" v-model="ruleForm.introduction"></el-input>
             </el-form-item>
 
-            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -175,7 +175,7 @@
                 </el-upload>
             </el-form-item>
 
-            <el-form-item label="内容" prop="content" :rules="[{ required: true, message: '内容不能为空',trigger: 'blur'}]">
+            <el-form-item label="内容">
                 <div id="eneditor"></div>
             </el-form-item>
 
@@ -226,7 +226,7 @@
                 <el-input type="textarea" v-model="editObj.introduction"></el-input>
             </el-form-item>
 
-            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -245,7 +245,7 @@
                 </el-upload>
             </el-form-item>
 
-            <el-form-item label="内容" prop="content">
+            <el-form-item label="内容">
                 <div id="eneditor2"></div>
             </el-form-item>
 
@@ -359,6 +359,13 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        if(this.eneditor.txt.text()==''){
+                            this.$message({
+                                type:'error',
+                                message:'编辑器内容不能为空'
+                            })
+                            return
+                        }
                         var dataNew = {
                                 ...this.ruleForm,
                             content:this.eneditor.txt.html()
@@ -385,6 +392,13 @@
             update(){
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
+                        if(this.eneditor.txt.text()==''){
+                            this.$message({
+                                type:'error',
+                                message:'编辑器内容不能为空'
+                            })
+                            return
+                        }
                         var dataNew = {
                                 ...this.editObj,
                             content:this.eneditor.txt.html()

@@ -138,7 +138,7 @@
                 <el-input type="text" v-model="ruleForm.year"></el-input>
             </el-form-item>
 
-            <el-form-item label="图片路径" prop="imgPath" :rules="[{ required: false, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片路径" prop="imgPath" :rules="[{ required: false, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -197,7 +197,7 @@
                 <el-input type="text" v-model="editObj.year"></el-input>
             </el-form-item>
 
-            <el-form-item label="图片路径" prop="imgPath" :rules="[{ required: false, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片路径" prop="imgPath" :rules="[{ required: false, message: '路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"

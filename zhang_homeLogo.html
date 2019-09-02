@@ -116,7 +116,7 @@
     <el-dialog title="新建" :visible.sync="dialogVisible" width="800px">
         <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-            <el-form-item label="图片地址" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片地址" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -167,7 +167,7 @@
         <el-form :model="editObj" ref="editForm" label-width="100px" class="demo-ruleForm">
 
 
-            <el-form-item label="图片地址" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片地址" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"

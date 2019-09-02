@@ -82,6 +82,10 @@
                     width="180"
                     :show-overflow-tooltip="true"
             >
+                <template slot-scope="scope">
+                    <!---->
+                    {{scope.row.selectAddr==1?'首页':scope.row.selectAddr==2?'人才招聘':scope.row.selectAddr==3?'社会招聘':'海科学院'}}
+                </template>
             </el-table-column>
             <el-table-column
                     prop="title"
@@ -165,7 +169,7 @@
                 <el-input type="textarea" v-model="ruleForm.content"></el-input>
             </el-form-item>
 
-            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -234,7 +238,7 @@
                 <el-input type="textarea" v-model="editObj.content"></el-input>
             </el-form-item>
 
-            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -300,7 +304,7 @@
                 }
             ],
             ruleForm: {
-                selectAddr:'1',
+                selectAddr:'1', //选择显示位置  1--首页  2--人才招聘  3--社会招聘 4--海科学院
                 title:'',
                 url:'',
                 content:'',

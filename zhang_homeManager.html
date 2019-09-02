@@ -138,7 +138,7 @@
                 <el-input type="textarea" v-model="ruleForm.content"></el-input>
             </el-form-item>
 
-            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -196,7 +196,7 @@
                 <el-input type="textarea" v-model="editObj.content"></el-input>
             </el-form-item>
 
-            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'change'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
