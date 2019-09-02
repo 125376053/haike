@@ -141,7 +141,8 @@ var pub = {
             this.page = page
             this.getData()
         },
-        //上传图片
+
+        //上传图片新建
         successImg(response, file, fileList){
             console.log(response, file, fileList);
             this.ruleForm.imgPath = response.data
@@ -149,7 +150,17 @@ var pub = {
         errorImg(error, file, fileList){
             console.log(error, file, fileList);
         },
-        // 视频地址
+
+        //上传图片更新
+        successImg2(response, file, fileList){
+            console.log(response, file, fileList);
+            this.editObj.imgPath = response.data
+        },
+        errorImg2(error, file, fileList){
+            console.log(error, file, fileList);
+        },
+
+        // 视频地址 新建
         successVideo(response, file, fileList){
             console.log(response, file, fileList);
             this.ruleForm.videoPath = response.data
@@ -157,6 +168,16 @@ var pub = {
         errorVideo(error, file, fileList){
             console.log(error, file, fileList);
         },
+
+        // 视频地址 更新
+        successVideo2(response, file, fileList){
+            console.log(response, file, fileList);
+            this.editObj.videoPath = response.data
+        },
+        errorVideo2(error, file, fileList){
+            console.log(error, file, fileList);
+        },
+
         // 新建弹出层
         add1(){
             this.dialogVisible = true
@@ -180,12 +201,13 @@ var pub = {
                     this.showEditor('#eneditor2')
                 }
                 // 设置内容---表格是detail 就设置detail
-                if(obj.detail){
-                    this.eneditor.txt.html(obj.detail)
-                }else{
-                    this.eneditor.txt.html(obj.content)
+                if(this.eneditor){
+                    if(obj.detail){
+                        this.eneditor.txt.html(obj.detail)
+                    }else{
+                        this.eneditor.txt.html(obj.content)
+                    }
                 }
-
                 this.$refs.editForm.resetFields()
             })
         },

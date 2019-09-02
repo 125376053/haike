@@ -17,7 +17,7 @@
     <script src="./element/element.js"></script>
 
 
-    <script src="../view/js/news.js"></script>
+    <!--<script src="../view/js/news.js"></script>-->
 </head>
 <body>
 <div id="app">
@@ -116,7 +116,7 @@
     <el-dialog title="新建" :visible.sync="dialogVisible" width="800px">
         <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-            <el-form-item label="图片地址" prop="imgPath" :rules="[{ required: false, message: '图片路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片地址" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'blur'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -135,7 +135,7 @@
                 </el-upload>
             </el-form-item>
 
-            <el-form-item label="创建时间" prop="time">
+            <!--<el-form-item label="创建时间" prop="time">
                 <el-date-picker
                         type="datetime"
                         placeholder="选择日期"
@@ -143,7 +143,7 @@
                         @change="changeTime"
                         value-format="yyyy-MM-dd HH:MM:SS"
                 ></el-date-picker>
-            </el-form-item>
+            </el-form-item>-->
 
 
             <el-form-item label="备注" prop="comment" >
@@ -167,7 +167,7 @@
         <el-form :model="editObj" ref="editForm" label-width="100px" class="demo-ruleForm">
 
 
-            <el-form-item label="图片地址" prop="imgPath" :rules="[{ required: false, message: '路径不能为空',trigger: 'blur'}]">
+            <el-form-item label="图片地址" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'blur'}]">
                 <el-input
                         :disabled="true"
                         style="width:500px;"
@@ -178,15 +178,15 @@
                         style="display: inline-block"
                         class="upload-demo"
                         :action="imgUrl"
-                        :on-success="successImg"
-                        :on-error="errorImg"
+                        :on-success="successImg2"
+                        :on-error="errorImg2"
                         :show-file-list="false"
                 >
                     <el-button size="small" type="primary">上传图片</el-button>
                 </el-upload>
             </el-form-item>
 
-            <el-form-item label="创建时间" prop="time">
+            <!--<el-form-item label="创建时间" prop="time">
                 <el-date-picker
                         type="datetime"
                         placeholder="选择日期"
@@ -194,15 +194,15 @@
                         @change="changeTime"
                         value-format="yyyy-MM-dd HH:MM:SS"
                 ></el-date-picker>
-            </el-form-item>
+            </el-form-item>-->
 
             <el-form-item label="备注" prop="comment" >
                 <el-input type="textarea" v-model="editObj.comment"></el-input>
             </el-form-item>
 
             <el-form-item prop="live">
-                <el-radio v-model="editObj.live" label="0">展示</el-radio>
-                <el-radio v-model="editObj.live" label="1">冻结</el-radio>
+                <el-radio v-model="editObj.live" :label="0">展示</el-radio>
+                <el-radio v-model="editObj.live" :label="1">冻结</el-radio>
             </el-form-item>
 
             <el-form-item>

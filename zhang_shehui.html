@@ -17,7 +17,7 @@
     <script src="./element/element.js"></script>
 
 
-    <script src="../view/js/news.js"></script>
+    <!--<script src="../view/js/news.js"></script>-->
 </head>
 <body>
 <div id="app">
@@ -89,6 +89,38 @@
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
+
+
+            <el-table-column
+                    prop="education"
+                    label="学历要求"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="workExperience"
+                    label="工作经验"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>
+
+            <el-table-column
+                    prop="peopleNum"
+                    label="招聘人数"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="mouthSalary"
+                    label="月薪"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>
+
             <el-table-column
                     prop="time"
                     label="创建时间"
@@ -97,12 +129,6 @@
                 <template slot-scope="scope">
                     {{date(scope.row.time)}}
                 </template>
-            </el-table-column>
-            <el-table-column
-                    prop="imgPath"
-                    label="图片地址"
-                    :show-overflow-tooltip="true"
-            >
             </el-table-column>
 
             <el-table-column
@@ -162,7 +188,7 @@
                 <el-input type="text" v-model="ruleForm.url"></el-input>
             </el-form-item>-->
 
-            <el-form-item label="创建时间" prop="time">
+            <!--<el-form-item label="创建时间" prop="time">
                 <el-date-picker
                         type="datetime"
                         placeholder="选择日期"
@@ -170,7 +196,7 @@
                         @change="changeTime"
                         value-format="yyyy-MM-dd HH:MM:SS"
                 ></el-date-picker>
-            </el-form-item>
+            </el-form-item>-->
 
             <el-form-item label="备注" prop="comment">
                 <el-input type="textarea" v-model="ruleForm.comment"></el-input>
@@ -211,7 +237,7 @@
                 <el-input type="textarea" v-model="editObj.content"></el-input>
             </el-form-item>
 
-            <el-form-item label="创建时间" prop="time">
+            <!--<el-form-item label="创建时间" prop="time">
                 <el-date-picker
                         type="datetime"
                         placeholder="选择日期"
@@ -219,15 +245,15 @@
                         @change="changeTime"
                         value-format="yyyy-MM-dd HH:MM:SS"
                 ></el-date-picker>
-            </el-form-item>
+            </el-form-item>-->
 
             <el-form-item label="备注" prop="comment">
                 <el-input type="textarea" v-model="editObj.comment"></el-input>
             </el-form-item>
 
             <el-form-item prop="live">
-                <el-radio v-model="editObj.live" label="0">展示</el-radio>
-                <el-radio v-model="editObj.live" label="1">冻结</el-radio>
+                <el-radio v-model="editObj.live" :label="0">展示</el-radio>
+                <el-radio v-model="editObj.live" :label="1">冻结</el-radio>
             </el-form-item>
 
             <el-form-item>

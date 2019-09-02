@@ -17,7 +17,7 @@
     <script src="./element/element.js"></script>
 
 
-    <script src="../view/js/news.js"></script>
+    <!--<script src="../view/js/news.js"></script>-->
 </head>
 <body>
 <div id="app">
@@ -137,7 +137,7 @@
             </el-form-item>
 
 
-            <el-form-item label="创建时间" prop="time">
+            <!--<el-form-item label="创建时间" prop="time">
                 <el-date-picker
                         type="datetime"
                         placeholder="选择日期"
@@ -145,7 +145,7 @@
                         @change="changeTime"
                         value-format="yyyy-MM-dd HH:MM:SS"
                 ></el-date-picker>
-            </el-form-item>
+            </el-form-item>-->
 
 
             <el-form-item label="备注" prop="comment" >
@@ -176,7 +176,7 @@
                 <div id="eneditor2"></div>
             </el-form-item>
 
-            <el-form-item label="创建时间" prop="time">
+            <!--<el-form-item label="创建时间" prop="time">
                 <el-date-picker
                         type="datetime"
                         placeholder="选择日期"
@@ -185,14 +185,14 @@
                         value-format="yyyy-MM-dd HH:MM:SS"
                 ></el-date-picker>
             </el-form-item>
-
+-->
             <el-form-item label="备注" prop="comment" >
                 <el-input type="textarea" v-model="editObj.comment"></el-input>
             </el-form-item>
 
             <el-form-item prop="live">
-                <el-radio v-model="editObj.live" label="0">展示</el-radio>
-                <el-radio v-model="editObj.live" label="1">冻结</el-radio>
+                <el-radio v-model="editObj.live" :label="0">展示</el-radio>
+                <el-radio v-model="editObj.live" :label="1">冻结</el-radio>
             </el-form-item>
 
             <el-form-item>

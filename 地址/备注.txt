@@ -1,10 +1,8 @@
-学院新闻，点击新闻跳转到新闻与媒体--新闻中心对应新闻
-
-人才招聘--雇主品牌，点击页面跳转 到新闻与媒体--新闻中心对应新闻
-
-设想这两块是在添加新闻的时候，选择雇主品牌或学院新闻  所以需要日期、简介、内容、小图
-
-BannerShow 之前Banner，换个名字，加了一个url字段，链接使用。
+实体名，第一个字母小写，比如BannerShow 实体，接口就是bannerShow/list/{page}/{rows} 添加（insert）、更新（update）、删除（/delete/{id}）、查询单个（/query/{id}）都是
 
 
-另外有些接口名没给你，你这边先用这些实体名，第一个字母小写，比如BannerShow 实体，接口就是bannerShow/list/{page}/{rows} 添加（insert）、更新（update）、删除（/delete/{id}）、查询单个（/query/{id}）都是
+fadeInUp animated-fast
+
+关于海科---社会责任 实体----移入到新闻中心
+海科视角----多媒体----宣传-------------------移入到首页相关视频
+相关视频 首页 宣传片 人才招聘的只是banner中的视频
