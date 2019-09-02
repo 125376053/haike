@@ -5,11 +5,12 @@ import java.util.Date;
 /**
  * 国际化管理--安全管理
  * @author yangshao516
- *
+ *	safetymanagement
  */
 public class SafetyManagement {
 	private Integer id;
 	private String title;//标题
+	private String content;//内容
 	private String imgPath;//图片路径
     private Date time;//创建时间
     private int live;//0--展示，1--冻结
@@ -57,6 +58,12 @@ public class SafetyManagement {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
     
     

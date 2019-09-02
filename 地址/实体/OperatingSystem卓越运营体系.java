@@ -5,12 +5,12 @@ import java.util.Date;
 /**
  * 国际化管理--卓越运营体系
  * @author yangshao516
- *
+ * operatingsystem
  */
- // operatingSystem
 public class OperatingSystem {
 	private Integer id;
 	private String title;//标题
+	private String imgPath;//图片链接
 	private String content;//内容  建议使用编辑器
     private Date time;//创建时间（后台自动添加）
     private int live;//0--展示，1--冻结
@@ -58,6 +58,12 @@ public class OperatingSystem {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public String getImgPath() {
+		return imgPath;
+	}
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
     
     

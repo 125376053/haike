@@ -18,7 +18,8 @@ managementAndSystem/frontEndList/{page}/{rows}/{live}
 //世界级外脑合作
 worldCooperation/frontEndList/{page}/{rows}/{live}
 ---
-//视频  {otherShow}//选择  1-首页；2--海科视角-新闻媒体-宣传片 3--人才招聘-海外人才招进 4--人才招聘-校园招聘
+//视频  -------------首页不通
+{otherShow}//选择  1-首页；2--海科视角-新闻媒体-宣传片 3--人才招聘-海外人才招进 4--人才招聘-校园招聘
 haikeVideo/frontEndList/{page}/{rows}/{live}/{otherShow}
 ---
 xxxxxxxxxxxxxxxxxx招聘
@@ -35,18 +36,18 @@ socialOrCampusRecruitment/frontEndList/{page}/{rows}/{live}/{type}
 // 校园招聘---雇主品牌 ----并入新闻中心 newsCenter
 ------------------------------------------
 
-//校园招聘--走进海科
+//校园招聘--走进海科----------------------走进海科接口不同
 campusgohaike/frontEndList/{page}/{rows}/{live}
 ---------------------------------------------------------
 
-//海外人才引进-------------招聘岗位
+//海外人才引进-------------招聘岗位-------------------没有数据
 overseasTalent/frontEndList/{page}/{rows}/{live}
 ---------------------------------------------------
-//海外人才引进------------------我们的足迹
+//海外人才引进------------------我们的足迹-------------------没有数据
 footprint/frontEndList/{page}/{rows}/{live}
 ------------------------------------------------
 
-//成长历程
+//成长历程----------后台填补了数据 前台测不了
 growthProcess/frontEndList/{page}/{rows}/{live}
 -------------------------------------------------
 
@@ -84,7 +85,7 @@ industrialDistribution/frontEndList/{page}/{rows}/{live}
 ----------------------------------------------
 
 
-//联系我们
+//联系我们------------------接口不通
 constructionResult/frontEndList/{live}
 
 

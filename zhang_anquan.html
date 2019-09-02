@@ -83,6 +83,13 @@
             >
             </el-table-column>
             <el-table-column
+                    prop="content"
+                    label="内容"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>
+            <el-table-column
                     prop="time"
                     label="创建时间"
                     :show-overflow-tooltip="true"
@@ -147,6 +154,10 @@
                 </el-upload>
             </el-form-item>
 
+            <el-form-item label="内容" prop="content">
+                <div id="eneditor"></div>
+            </el-form-item>
+
             <!--<el-form-item label="创建时间" prop="time">
                 <el-date-picker
                         type="datetime"
@@ -199,6 +210,10 @@
                 >
                     <el-button size="small" type="primary">上传图片</el-button>
                 </el-upload>
+            </el-form-item>
+
+            <el-form-item label="内容" prop="content">
+                <div id="eneditor2"></div>
             </el-form-item>
 
             <!--<el-form-item label="创建时间" prop="time">

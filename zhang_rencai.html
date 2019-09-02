@@ -407,7 +407,7 @@
             // 初始请求数据
             getData(){
                 $.ajax({
-                    url: api+`/cverseasTalent/list/${this.page}/${this.pageCount}`,
+                    url: api+`/overseasTalent/list/${this.page}/${this.pageCount}`,
                     success:(res)=>{
                         console.log(typeof res);
                         var obj = JSON.parse(res);
@@ -420,7 +420,7 @@
             // 搜索
             searchFn(){
                 $.ajax({
-                    url: api + "/cverseasTalent/query/"+this.search,
+                    url: api + "/overseasTalent/query/"+this.search,
                     success: (data) => {
                         console.log(data);
                         this.getData()
@@ -436,7 +436,7 @@
                         }
                         console.log(dataNew);
                         $.ajax({
-                            url: api + "/cverseasTalent/insert",
+                            url: api + "/overseasTalent/insert",
                             data: JSON.stringify(dataNew),
                             type: "post",
                             headers: {"Content-Type": "application/json;charset=UTF-8"},
@@ -463,7 +463,7 @@
                         }
                         console.log(dataNew);
                         $.ajax({
-                            url: api + "/cverseasTalent/update",
+                            url: api + "/overseasTalent/update",
                             data: JSON.stringify(dataNew),
                             type: "post",
                             contentType:'text/plain;charset=UTF-8',
@@ -487,7 +487,7 @@
                     type: 'warning'
                 }).then(() => {
                     $.ajax({
-                        url: api + "/cverseasTalent/delete/"+id,
+                        url: api + "/overseasTalent/delete/"+id,
                         success: (data) => {
                             this.$message({
                                 type: 'success',
