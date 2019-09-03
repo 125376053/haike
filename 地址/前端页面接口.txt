@@ -40,12 +40,17 @@ socialOrCampusRecruitment/frontEndList/{page}/{rows}/{live}/{type}
 campusgohaike/frontEndList/{page}/{rows}/{live}
 ---------------------------------------------------------
 
-//海外人才引进-------------招聘岗位-------------------没有数据
+xxxxxxxxxxxxxxxxxxxxxxxxx------------------------------------person_overseas.html
+//海外人才引进-------------招聘岗位
 overseasTalent/frontEndList/{page}/{rows}/{live}
 ---------------------------------------------------
-//海外人才引进------------------我们的足迹-------------------没有数据
+//海外人才引进------------------我们的足迹
 footprint/frontEndList/{page}/{rows}/{live}
 ------------------------------------------------
+
+// 出版物 media_publish_angle.html  publication/frontEndList/{page}/{rows}/{live}
+
+
 
 //成长历程----------后台填补了数据 前台测不了
 growthProcess/frontEndList/{page}/{rows}/{live}
@@ -98,13 +103,6 @@ newsCenter/frontEndDetail/{id}
 
 
 1 添加视频 后台添加后 前台不显示
-
-3 //海外人才引进-------------招聘岗位-------------------没有数据 添加数据前台不显示
-overseasTalent/frontEndList/{page}/{rows}/{live}
----------------------------------------------------
-4 //海外人才引进------------------我们的足迹-------------------没有数据 添加数据 前台不显示
-footprint/frontEndList/{page}/{rows}/{live}
-------------------------------------------------
 
 5 //成长历程----------后台添加不了数据 前台测不了
 growthProcess/frontEndList/{page}/{rows}/{live}

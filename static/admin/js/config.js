@@ -17,7 +17,8 @@ var config = {
 }
 
 
-var api = 'http://47.56.120.18:8080' //远程
+var api = "http://zhangfuming.cn"
+//var api = 'http://47.56.120.18:8080' //远程
 //var api = 'http://192.168.101.83/haike' //本地
 //  /common/upload/img
 
