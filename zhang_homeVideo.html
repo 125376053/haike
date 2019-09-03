@@ -328,6 +328,15 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+
+                        if(this.newsList.length>=3){
+                            this.$message({
+                                type:'error',
+                                message:'只能上传3个视频'
+                            })
+                            return
+                        }
+
                         var dataNew = {
                             ...this.ruleForm,
                             //content:this.eneditor.txt.html()

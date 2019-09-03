@@ -145,7 +145,7 @@ var pub = {
         //上传图片新建
         successImg(response, file, fileList){
             console.log(response, file, fileList);
-            this.ruleForm.imgPath = api+response.data
+            this.ruleForm.imgPath = api+'/'+response.data
         },
         errorImg(error, file, fileList){
             console.log(error, file, fileList);
@@ -154,7 +154,7 @@ var pub = {
         //上传图片更新
         successImg2(response, file, fileList){
             console.log(response, file, fileList);
-            this.editObj.imgPath = api+response.data
+            this.editObj.imgPath = api+'/'+response.data
         },
         errorImg2(error, file, fileList){
             console.log(error, file, fileList);
@@ -213,6 +213,20 @@ var pub = {
                 this.$refs.editForm.resetFields()
             })
         },
+        beforeUpload(file) {
+            /*console.log(file);
+            const isJPG = file.type === 'image/gif' || file.type === 'image/png' || file.type === 'image/jpg' ||  file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 500;
+
+            if (!isJPG) {
+                this.$message.error('上传文件只能是图片格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传文件不能超过500KB!');
+            }
+            return isJPG && isLt2M;*/
+            return
+        },
         /*changeStatus(status){
             console.log(status);
             this.newsList[0].live = status
@@ -241,16 +255,12 @@ var pub = {
 
             eneditor.customConfig.uploadImgHooks = {
                 customInsert: function (insertImg, result, editor) {
-                    console.log(111111111111);
-                    console.log(22222222);
-                    console.log(insertImg);
-                    console.log(result);
-                    console.log(editor);
+
                     // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
                     // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
 
                     // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
-                    var url =result.data;
+                    var url =api+'/'+result.data;
                     console.log(url);
                     insertImg(url);
                 }
