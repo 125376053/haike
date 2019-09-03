@@ -145,7 +145,7 @@ var pub = {
         //上传图片新建
         successImg(response, file, fileList){
             console.log(response, file, fileList);
-            this.ruleForm.imgPath = response.data
+            this.ruleForm.imgPath = api+response.data
         },
         errorImg(error, file, fileList){
             console.log(error, file, fileList);
@@ -154,7 +154,7 @@ var pub = {
         //上传图片更新
         successImg2(response, file, fileList){
             console.log(response, file, fileList);
-            this.editObj.imgPath = response.data
+            this.editObj.imgPath = api+response.data
         },
         errorImg2(error, file, fileList){
             console.log(error, file, fileList);
@@ -163,7 +163,7 @@ var pub = {
         // 视频地址 新建
         successVideo(response, file, fileList){
             console.log(response, file, fileList);
-            this.ruleForm.videoPath = response.data
+            this.ruleForm.videoPath = api+response.data
         },
         errorVideo(error, file, fileList){
             console.log(error, file, fileList);
@@ -172,7 +172,7 @@ var pub = {
         // 视频地址 更新
         successVideo2(response, file, fileList){
             console.log(response, file, fileList);
-            this.editObj.videoPath = response.data
+            this.editObj.videoPath = api+response.data
         },
         errorVideo2(error, file, fileList){
             console.log(error, file, fileList);
@@ -230,23 +230,28 @@ var pub = {
             // 配置服务器端地址,也就是controller的请求路径，不带项目路径，前面没有/
             // http://192.168.101.83/haike/common/upload/wangEditImg
             eneditor.customConfig.uploadImgServer = api+'/common/upload/wangEditImg'
-            eneditor.customConfig.withCredentials = true
+            //eneditor.customConfig.withCredentials = true
             eneditor.customConfig.uploadImgTimeout = 50000;
             eneditor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024;
             //配置属性名称，绑定请求的图片数据
             //controller会用到，可以随便设置，但是一定要与controller一致
             eneditor.customConfig.uploadFileName = 'myFile';
 
+
+
             eneditor.customConfig.uploadImgHooks = {
                 customInsert: function (insertImg, result, editor) {
                     console.log(111111111111);
                     console.log(22222222);
-                    console.log(insertImg, result, editor);
+                    console.log(insertImg);
+                    console.log(result);
+                    console.log(editor);
                     // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
                     // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
 
                     // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
                     var url =result.data;
+                    console.log(url);
                     insertImg(url);
                 }
             }

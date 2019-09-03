@@ -801,10 +801,11 @@
                  insertLinkImg(link)
                  })*/
                 var url = result.data[0];
-
+                console.log(url);
                 //todo  重写服务器返回只有图片名字,当前服务器ip:port/pic_file/图片名
                 var ppath = url;
                 //ppath = path + "/pic_fil
+                console.log(ppath);
                 insertLinkImg(ppath);
 
                 console.log("插入图片 url = " + ppath)
