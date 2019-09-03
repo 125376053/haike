@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>校园招聘-招聘岗位</title>
+    <title>首页-产业布局</title>
     <link rel="stylesheet" href="./static/common/layui/css/layui.css">
     <link rel="stylesheet" href="./static/admin/css/style.css">
     <!--<script src="./static/common/layui/layui.js"></script>-->
@@ -64,21 +64,6 @@
     <!--右侧内容-->
     <div class="right">
 
-        <el-tabs v-model="activeName" type="card">
-            <el-tab-pane name="1">
-                <a href="zhang_gangwei.html" slot="label">招聘岗位</a>
-            </el-tab-pane>
-            <el-tab-pane name="2">
-                <a href="zhang_jincheng.html" slot="label">宣讲会进程</a>
-            </el-tab-pane>
-            <el-tab-pane name="3">
-                <a href="zhang_luyong.html" slot="label">录用公示</a>
-            </el-tab-pane>
-            <!--<el-tab-pane name="4">
-                <a href="zhang_guzhu.html" slot="label">雇主品牌</a>
-            </el-tab-pane>-->
-        </el-tabs>
-
         <!--添加弹出-->
         <a class="layui-btn" @click="add1"><i class="layui-icon">&#xe654;</i>添加</a>
 
@@ -91,40 +76,15 @@
                 :data="newsList"
                 style="width: 100%">
             <el-table-column
-                    prop=""
-                    label="类型"
+                    prop="content"
+                    label="内容"
                     width="180"
                     :show-overflow-tooltip="true"
             >
-                <template slot-scope="scope">
-                    校园招聘
-                </template>
             </el-table-column>
             <el-table-column
                     prop="title"
                     label="标题"
-                    width="180"
-                    :show-overflow-tooltip="true"
-            >
-            </el-table-column>
-            <el-table-column
-                    prop="address"
-                    label="工作地点"
-                    width="180"
-                    :show-overflow-tooltip="true"
-            >
-            </el-table-column>
-            <el-table-column
-                    prop="content"
-                    label="应聘要求"
-                    width="180"
-                    :show-overflow-tooltip="true"
-            >
-            </el-table-column>
-
-            <el-table-column
-                    prop="yearSalary"
-                    label="年薪"
                     width="180"
                     :show-overflow-tooltip="true"
             >
@@ -137,6 +97,12 @@
                 <template slot-scope="scope">
                     {{date(scope.row.time)}}
                 </template>
+            </el-table-column>
+            <el-table-column
+                    prop="imgPath"
+                    label="图片地址"
+                    :show-overflow-tooltip="true"
+            >
             </el-table-column>
 
             <el-table-column
@@ -163,21 +129,13 @@
 
     <!--新建-->
     <el-dialog title="新建" :visible.sync="dialogVisible" width="800px">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-            <el-form-item label="标题" prop="title">
-                <el-input type="text" v-model="ruleForm.title"></el-input>
-            </el-form-item>
-            <el-form-item label="工作地点" prop="address">
-                <el-input type="text" v-model="ruleForm.address"></el-input>
-            </el-form-item>
-
-            <el-form-item label="应聘要求" prop="content">
+            <el-form-item label="内容" prop="content" :rules="[{ required: true, message: '内容不能为空',trigger: 'blur'}]">
                 <el-input type="textarea" v-model="ruleForm.content"></el-input>
             </el-form-item>
-
-            <el-form-item label="年薪" prop="yearSalary">
-                <el-input type="text" v-model="ruleForm.yearSalary"></el-input>
+            <el-form-item label="标题" prop="title" :rules="[{ required: true, message: '标题不能为空',trigger: 'blur'}]">
+                <el-input type="text" v-model="ruleForm.title"></el-input>
             </el-form-item>
 
             <!--<el-form-item label="创建时间" prop="time">
@@ -190,8 +148,27 @@
                 ></el-date-picker>
             </el-form-item>-->
 
+            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
+                <el-input
+                        :disabled="true"
+                        style="width:500px;"
+                        v-model="ruleForm.imgPath"
+                ></el-input>
+                <!--:show-file-list="false"-->
+                <el-upload
+                        style="display: inline-block"
+                        class="upload-demo"
+                        :action="imgUrl"
+                        :on-success="successImg"
+                        :on-error="errorImg"
+                        :show-file-list="false"
+                >
+                    <el-button size="small" type="primary">上传图片</el-button>
+                </el-upload>
+            </el-form-item>
+
             <el-form-item label="备注" prop="comment">
-                <el-input type="textarea" v-model="ruleForm.comment"></el-input>
+                <el-input type="text" v-model="ruleForm.comment"></el-input>
             </el-form-item>
 
             <el-form-item prop="live">
@@ -208,22 +185,12 @@
 
     <!--编辑-->
     <el-dialog title="编辑" :visible.sync="dialogVisible1" width="800px">
-        <el-form :model="editObj" :rules="editRules" ref="editForm" label-width="100px" class="demo-ruleForm">
-
-            <el-form-item label="标题" prop="title">
-                <el-input type="text" v-model="editObj.title"></el-input>
-            </el-form-item>
-
-            <el-form-item label="工作地点" prop="address">
-                <el-input type="text" v-model="editObj.address"></el-input>
-            </el-form-item>
-
-            <el-form-item label="应聘要求" prop="content">
+        <el-form :model="editObj" ref="editForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="内容" prop="content" :rules="[{ required: true, message: '内容不能为空',trigger: 'blur'}]">
                 <el-input type="textarea" v-model="editObj.content"></el-input>
             </el-form-item>
-
-            <el-form-item label="年薪" prop="yearSalary">
-                <el-input type="text" v-model="editObj.yearSalary"></el-input>
+            <el-form-item label="标题" prop="title" :rules="[{ required: true, message: '标题不能为空',trigger: 'blur'}]">
+                <el-input type="text" v-model="editObj.title"></el-input>
             </el-form-item>
 
             <!--<el-form-item label="创建时间" prop="time">
@@ -236,10 +203,28 @@
                 ></el-date-picker>
             </el-form-item>-->
 
-            <el-form-item label="备注" prop="comment">
-                <el-input type="textarea" v-model="editObj.comment"></el-input>
+            <el-form-item label="上传路径" prop="imgPath" :rules="[{ required: true, message: '路径不能为空',trigger: 'change'}]">
+                <el-input
+                        :disabled="true"
+                        style="width:500px;"
+                        v-model="editObj.imgPath"
+                ></el-input>
+                <!--:show-file-list="false"-->
+                <el-upload
+                        style="display: inline-block"
+                        class="upload-demo"
+                        :action="imgUrl"
+                        :on-success="successImg2"
+                        :on-error="errorImg2"
+                        :show-file-list="false"
+                >
+                    <el-button size="small" type="primary">上传图片</el-button>
+                </el-upload>
             </el-form-item>
 
+            <el-form-item label="备注" prop="comment">
+                <el-input type="text" v-model="editObj.comment"></el-input>
+            </el-form-item>
             <el-form-item prop="live">
                 <el-radio v-model="editObj.live" :label="0">展示</el-radio>
                 <el-radio v-model="editObj.live" :label="1">冻结</el-radio>
@@ -260,49 +245,31 @@
         el: '#app',
         mixins: [pub],
         data: {
-            activeName:'1',
             newsList: [
                 {
                     time: '2016-05-03',
                     title: '王小虎',
                     content: '上海市普陀区金沙江路 1516 弄',
-                    imgPath:'www.baidu.com',
+                    imgPath: 'www.baidu.com',
                     live: '0',// 0展示绿色 1 冻结红色
                 }
             ],
             ruleForm: {
-                yearSalary:'', //年薪
-                content:'', //招聘要求
-                title:'',
-                address:'',
-                time:new Date(),//new Date()
                 comment: '',
-                type:'2', // 校园招聘
+                content: '',
+                title: '',
+                time: new Date(),//new Date()
+                imgPath: '',
                 live: '1',// 0展示绿色 1 冻结红色
-            },
-            rules: {
-                yearSalary: [{ required: true, message: '请输入年薪', trigger: 'blur' }],
-                title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-                address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
-                content: [{ required: true, message: '请输入招聘要求', trigger: 'blur' }]
             },
             // 编辑对象 --- 编辑与新建不能使用同一套验证规则和字段 会引起意外
             editObj: {
-                yearSalary:'', //年薪
-                content:'', //招聘要求
-                title:'',
-                address:'',
-                time:new Date(),//new Date()
                 comment: '',
-                type:'2', // 校园招聘
+                content: '',
+                title: '',
+                time: new Date(),//new Date()
+                imgPath: '',
                 live: '1',// 0展示绿色 1 冻结红色
-            },
-            // 编辑规则
-            editRules: {
-                yearSalary: [{ required: true, message: '请输入年薪', trigger: 'blur' }],
-                title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-                address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
-                content: [{ required: true, message: '请输入招聘要求', trigger: 'blur' }]
             },
         },
         mounted(){
@@ -313,8 +280,8 @@
             // 初始请求数据
             getData(){
                 $.ajax({
-                    url: api+`/socialOrCampusRecruitment/list/${this.page}/${this.pageCount}`,
-                    success:(res)=>{
+                    url: api + `/industrialDistribution/list/${this.page}/${this.pageCount}`,
+                    success: (res) => {
                         console.log(typeof res);
                         var obj = JSON.parse(res);
                         console.log(obj);
@@ -326,7 +293,7 @@
             // 搜索
             searchFn(){
                 $.ajax({
-                    url: api + "/socialOrCampusRecruitment/query/"+this.search,
+                    url: api + "/industrialDistribution/query/" + this.search,
                     success: (data) => {
                         console.log(data);
                         this.getData()
@@ -342,10 +309,10 @@
                         }
                         console.log(dataNew);
                         $.ajax({
-                            url: api + "/socialOrCampusRecruitment/insert",
+                            url: api + "/industrialDistribution/insert",
                             data: JSON.stringify(dataNew),
                             type: "post",
-                            contentType:'text/plain;charset=UTF-8',
+                            contentType: 'text/plain;charset=UTF-8',
                             success: (data) => {
                                 console.log(data);
                                 this.getData()
@@ -367,10 +334,10 @@
                         }
                         console.log(dataNew);
                         $.ajax({
-                            url: api + "/socialOrCampusRecruitment/update",
+                            url: api + "/industrialDistribution/update",
                             data: JSON.stringify(dataNew),
                             type: "post",
-                            contentType:'text/plain;charset=UTF-8',
+                            contentType: 'text/plain;charset=UTF-8',
                             success: (data) => {
                                 console.log(data);
                                 this.getData()
@@ -391,7 +358,7 @@
                     type: 'warning'
                 }).then(() => {
                     $.ajax({
-                        url: api + "/socialOrCampusRecruitment/delete/"+id,
+                        url: api + "/industrialDistribution/delete/" + id,
                         success: (data) => {
                             this.$message({
                                 type: 'success',

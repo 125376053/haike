@@ -141,8 +141,36 @@
                 </el-select>
             </el-form-item>
 
-            <el-form-item label="内容" prop="content">
+            <!--<el-form-item label="内容" prop="content">
                 <div id="eneditor"></div>
+            </el-form-item>-->
+
+            <!--标题+内容+缩略图-->
+            <el-form-item label="标题" prop="title" :rules="[{ required: true, message: '标题不能为空',trigger: 'blur'}]">
+                <el-input type="text" v-model="ruleForm.title"></el-input>
+            </el-form-item>
+
+            <el-form-item label="内容" prop="content" :rules="[{ required: true, message: '内容不能为空',trigger: 'blur'}]">
+                <el-input type="textarea" v-model="ruleForm.content"></el-input>
+            </el-form-item>
+
+            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
+                <el-input
+                        :disabled="true"
+                        style="width:500px;"
+                        v-model="ruleForm.imgPath"
+                ></el-input>
+                <!--:show-file-list="false"-->
+                <el-upload
+                        style="display: inline-block"
+                        class="upload-demo"
+                        :action="imgUrl"
+                        :on-success="successImg"
+                        :on-error="errorImg"
+                        :show-file-list="false"
+                >
+                    <el-button size="small" type="primary">上传图片</el-button>
+                </el-upload>
             </el-form-item>
 
             <!--<el-form-item label="创建时间" prop="time">
@@ -185,8 +213,35 @@
                 </el-select>
             </el-form-item>
 
-            <el-form-item label="内容" prop="content">
+            <!--<el-form-item label="内容" prop="content">
                 <div id="eneditor2"></div>
+            </el-form-item>-->
+            <!--标题+内容+缩略图-->
+            <el-form-item label="标题" prop="title" :rules="[{ required: true, message: '标题不能为空',trigger: 'blur'}]">
+                <el-input type="text" v-model="editObj.title"></el-input>
+            </el-form-item>
+
+            <el-form-item label="内容" prop="content" :rules="[{ required: true, message: '内容不能为空',trigger: 'blur'}]">
+                <el-input type="textarea" v-model="editObj.content"></el-input>
+            </el-form-item>
+
+            <el-form-item label="缩略图" prop="imgPath" :rules="[{ required: true, message: '图片路径不能为空',trigger: 'change'}]">
+                <el-input
+                        :disabled="true"
+                        style="width:500px;"
+                        v-model="editObj.imgPath"
+                ></el-input>
+                <!--:show-file-list="false"-->
+                <el-upload
+                        style="display: inline-block"
+                        class="upload-demo"
+                        :action="imgUrl"
+                        :on-success="successImg2"
+                        :on-error="errorImg2"
+                        :show-file-list="false"
+                >
+                    <el-button size="small" type="primary">上传图片</el-button>
+                </el-upload>
             </el-form-item>
 
             <!--<el-form-item label="创建时间" prop="time">
@@ -237,6 +292,8 @@
             ],
             ruleForm: {
                 content:'',
+                imgPath:'',
+                title:'',
                 comment:'',
                 time:new Date(),//new Date()
                 selectTitle: '1',
@@ -245,6 +302,8 @@
             // 编辑对象 --- 编辑与新建不能使用同一套验证规则和字段 会引起意外
             editObj: {
                 content:'',
+                imgPath:'',
+                title:'',
                 comment:'',
                 time:new Date(),//new Date()
                 selectTitle: '1',
@@ -283,16 +342,16 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        if(this.eneditor.txt.text()==''){
+                        /*if(this.eneditor.txt.text()==''){
                             this.$message({
                                 type:'error',
                                 message:'编辑器内容不能为空'
                             })
                             return
-                        }
+                        }*/
                         var dataNew = {
                                 ...this.ruleForm,
-                            content:this.eneditor.txt.html()
+                            //content:this.eneditor.txt.html()
                         }
                         console.log(dataNew);
                         $.ajax({
@@ -316,16 +375,16 @@
             update(){
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
-                        if(this.eneditor.txt.text()==''){
+                        /*if(this.eneditor.txt.text()==''){
                             this.$message({
                                 type:'error',
                                 message:'编辑器内容不能为空'
                             })
                             return
-                        }
+                        }*/
                         var dataNew = {
                                 ...this.editObj,
-                            content:this.eneditor.txt.html()
+                            //content:this.eneditor.txt.html()
                         }
                         console.log(dataNew);
                         $.ajax({
