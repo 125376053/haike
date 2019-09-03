@@ -280,7 +280,7 @@
             // 初始请求数据
             getData(){
                 $.ajax({
-                    url: api + `/campusEmployerBrand/list/${this.page}/${this.pageCount}`,
+                    url: api + `/medicine/list/${this.page}/${this.pageCount}`,
                     success: (res) => {
                         console.log(typeof res);
                         var obj = JSON.parse(res);
@@ -293,7 +293,7 @@
             // 搜索
             searchFn(){
                 $.ajax({
-                    url: api + "/campusEmployerBrand/query/" + this.search,
+                    url: api + "/medicine/query/" + this.search,
                     success: (data) => {
                         console.log(data);
                         this.getData()
@@ -309,7 +309,7 @@
                         }
                         console.log(dataNew);
                         $.ajax({
-                            url: api + "/campusEmployerBrand/insert",
+                            url: api + "/medicine/insert",
                             data: JSON.stringify(dataNew),
                             type: "post",
                             contentType: 'text/plain;charset=UTF-8',
@@ -334,7 +334,7 @@
                         }
                         console.log(dataNew);
                         $.ajax({
-                            url: api + "/campusEmployerBrand/update",
+                            url: api + "/medicine/update",
                             data: JSON.stringify(dataNew),
                             type: "post",
                             contentType: 'text/plain;charset=UTF-8',
@@ -358,7 +358,7 @@
                     type: 'warning'
                 }).then(() => {
                     $.ajax({
-                        url: api + "/campusEmployerBrand/delete/" + id,
+                        url: api + "/medicine/delete/" + id,
                         success: (data) => {
                             this.$message({
                                 type: 'success',

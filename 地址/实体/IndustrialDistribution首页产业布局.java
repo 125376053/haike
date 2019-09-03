@@ -7,6 +7,8 @@ import java.util.Date;
  * @author yangshao516
  *
  */
+
+ industrialDistribution 
 public class IndustrialDistribution {
 	private Integer id;
 	private String title;//标题

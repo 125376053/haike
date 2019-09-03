@@ -85,9 +85,12 @@ newsCenter/frontEndList/{page}/{rows}/{live}/{selectOtherShow=3}
 ---------------------------------------------------
 
 
-//产业布局------------- 没有数据暂时无法测试
+//首页产业布局------------- 没有数据暂时无法测试
 industrialDistribution/frontEndList/{page}/{rows}/{live}
 ----------------------------------------------
+
+// 医药
+medicine/frontEndList/{page}/{rows}/{live}
 
 
 //联系我们------------------接口不通

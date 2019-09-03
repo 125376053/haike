@@ -58,17 +58,21 @@
         "url": "zhang_homeInfor.html"
       },
       {
+        "name": "产业布局",
+        "url": "zhang_homeChanye.html"
+      },
+      {
         "name": "管理与体系",
         "url": "zhang_homeManager.html"
       },
       {
         "name": "世界级外脑合作",
         "url": "zhang_homeWorld.html"
-      },
-      {
+      }
+      /*{
         "name": "3+2",
         "url": "zhang_homeLogo.html"
-      },
+      }*/
     ]
   },
   {

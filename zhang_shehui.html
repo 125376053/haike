@@ -76,6 +76,16 @@
                 :data="newsList"
                 style="width: 100%">
             <el-table-column
+                    prop=""
+                    label="类型"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+                <template slot-scope="scope">
+                    社会招聘
+                </template>
+            </el-table-column>
+            <el-table-column
                     prop="content"
                     label="内容"
                     width="180"
