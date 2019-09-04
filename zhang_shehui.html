@@ -78,7 +78,6 @@
             <el-table-column
                     prop=""
                     label="类型"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
                 <template slot-scope="scope">
@@ -88,21 +87,18 @@
             <el-table-column
                     prop="content"
                     label="内容"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
             <el-table-column
                     prop="title"
                     label="标题"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
             <el-table-column
                     prop="url"
                     label="链接"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
@@ -110,14 +106,12 @@
             <el-table-column
                     prop="education"
                     label="学历要求"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
             <el-table-column
                     prop="workExperience"
                     label="工作经验"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
@@ -125,14 +119,12 @@
             <el-table-column
                     prop="peopleNum"
                     label="招聘人数"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
             <el-table-column
                     prop="mouthSalary"
                     label="月薪"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
@@ -149,7 +141,7 @@
 
             <el-table-column
                     label="操作"
-                    width="200px"
+                    width="150px"
             >
                 <template slot-scope="scope">
                     <el-button size="mini" @click="edit(scope.row)">编辑</el-button>

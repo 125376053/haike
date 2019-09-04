@@ -16,11 +16,15 @@
     <!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
     <script src="./element/element.js"></script>
 
-
+    <style>
+        [v-cloak]{
+            display:none
+        }
+    </style>
     <!--<script src="../view/js/news.js"></script>-->
 </head>
 <body>
-<div id="app">
+<div id="app" v-cloak>
     <!--顶栏-->
     <header>
         <h1 v-text="webname"></h1>
@@ -65,13 +69,13 @@
     <div class="right">
 
         <el-tabs v-model="activeName" type="card">
-            <el-tab-pane name="1">
+            <el-tab-pane name="1" :lazy="true">
                 <a href="zhang_gangwei.html" slot="label">招聘岗位</a>
             </el-tab-pane>
-            <el-tab-pane name="2">
+            <el-tab-pane name="2" :lazy="true">
                 <a href="zhang_jincheng.html" slot="label">宣讲会进程</a>
             </el-tab-pane>
-            <el-tab-pane name="3">
+            <el-tab-pane name="3" :lazy="true">
                 <a href="zhang_luyong.html" slot="label">录用公示</a>
             </el-tab-pane>
             <!--<el-tab-pane name="4">
@@ -93,14 +97,12 @@
             <el-table-column
                     prop="content"
                     label="内容"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
             <el-table-column
                     prop="title"
                     label="标题"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
@@ -121,7 +123,7 @@
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="200px"
+                    width="150px"
             >
                 <template slot-scope="scope">
                     <el-button size="mini" @click="edit(scope.row)">编辑</el-button>

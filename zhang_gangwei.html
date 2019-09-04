@@ -93,7 +93,6 @@
             <el-table-column
                     prop=""
                     label="类型"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
                 <template slot-scope="scope">
@@ -103,28 +102,30 @@
             <el-table-column
                     prop="title"
                     label="标题"
-                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="detail"
+                    label="内容"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
             <el-table-column
                     prop="url"
                     label="链接"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
             <el-table-column
                     prop="address"
                     label="工作地点"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
             <el-table-column
                     prop="content"
                     label="应聘要求"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
@@ -132,7 +133,6 @@
             <el-table-column
                     prop="yearSalary"
                     label="年薪"
-                    width="180"
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
@@ -148,7 +148,7 @@
 
             <el-table-column
                     label="操作"
-                    width="200px"
+                    width="150px"
             >
                 <template slot-scope="scope">
                     <el-button size="mini" @click="edit(scope.row)">编辑</el-button>
@@ -190,6 +190,10 @@
 
             <el-form-item label="年薪" prop="yearSalary">
                 <el-input type="text" v-model="ruleForm.yearSalary"></el-input>
+            </el-form-item>
+
+            <el-form-item label="内容">
+                <div id="eneditor"></div>
             </el-form-item>
 
             <!--<el-form-item label="创建时间" prop="time">
@@ -242,6 +246,10 @@
                 <el-input type="text" v-model="editObj.yearSalary"></el-input>
             </el-form-item>
 
+            <el-form-item label="内容">
+                <div id="eneditor2"></div>
+            </el-form-item>
+
             <!--<el-form-item label="创建时间" prop="time">
                 <el-date-picker
                         type="datetime"
@@ -270,6 +278,7 @@
 </div>
 <script src="./static/admin/js/config.js"></script>
 <script src="mxins/index.js"></script>
+<script src="static/wangEditor/wangEditor2.js"></script>
 <script type="text/javascript">
 
     new Vue({
@@ -281,6 +290,7 @@
 
             ],
             ruleForm: {
+                detail:'',
                 url:'',
                 yearSalary:'', //年薪
                 content:'', //招聘要求
@@ -304,6 +314,7 @@
                 content:'', //招聘要求
                 title:'',
                 address:'',
+                detail:'',
                 time:new Date(),//new Date()
                 comment: '',
                 type:'2', // 校园招聘
@@ -349,8 +360,16 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        if(this.eneditor.txt.html()=='<p><br></p>'){
+                            this.$message({
+                                type:'error',
+                                message:'编辑器内容不能为空'
+                            })
+                            return
+                        }
                         var dataNew = {
-                            ...this.ruleForm
+                            ...this.ruleForm,
+                            detail:this.eneditor.txt.html()
                         }
                         console.log(dataNew);
                         $.ajax({
@@ -374,8 +393,16 @@
             update(){
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
+                        if(this.eneditor.txt.html()=='<p><br></p>'){
+                            this.$message({
+                                type:'error',
+                                message:'编辑器内容不能为空'
+                            })
+                            return
+                        }
                         var dataNew = {
-                            ...this.editObj
+                            ...this.editObj,
+                            detail:this.eneditor.txt.html()
                         }
                         console.log(dataNew);
                         $.ajax({
