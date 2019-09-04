@@ -107,6 +107,13 @@
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
+            <!--<el-table-column
+                    prop="url"
+                    label="链接"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>-->
             <el-table-column
                     prop="address"
                     label="工作地点"
@@ -168,6 +175,11 @@
             <el-form-item label="标题" prop="title">
                 <el-input type="text" v-model="ruleForm.title"></el-input>
             </el-form-item>
+
+            <!--<el-form-item label="链接" prop="url">
+                <el-input type="text" v-model="ruleForm.url"></el-input>
+            </el-form-item>-->
+
             <el-form-item label="工作地点" prop="address">
                 <el-input type="text" v-model="ruleForm.address"></el-input>
             </el-form-item>
@@ -213,6 +225,10 @@
             <el-form-item label="标题" prop="title">
                 <el-input type="text" v-model="editObj.title"></el-input>
             </el-form-item>
+
+            <!--<el-form-item label="链接" prop="url">
+                <el-input type="text" v-model="editObj.url"></el-input>
+            </el-form-item>-->
 
             <el-form-item label="工作地点" prop="address">
                 <el-input type="text" v-model="editObj.address"></el-input>
@@ -262,15 +278,10 @@
         data: {
             activeName:'1',
             newsList: [
-                {
-                    time: '2016-05-03',
-                    title: '王小虎',
-                    content: '上海市普陀区金沙江路 1516 弄',
-                    imgPath:'www.baidu.com',
-                    live: '0',// 0展示绿色 1 冻结红色
-                }
+
             ],
             ruleForm: {
+                url:'',
                 yearSalary:'', //年薪
                 content:'', //招聘要求
                 title:'',
@@ -288,6 +299,7 @@
             },
             // 编辑对象 --- 编辑与新建不能使用同一套验证规则和字段 会引起意外
             editObj: {
+                url:'',
                 yearSalary:'', //年薪
                 content:'', //招聘要求
                 title:'',

@@ -170,6 +170,8 @@
                     style="display: inline-block"
                     class="upload-demo"
                     :action="imgUrl"
+                    accept="image/*"
+                    :before-upload="beforeImgUpload"
                     :on-success="successImg"
                     :on-error="errorImg"
                     :show-file-list="false"
@@ -230,6 +232,8 @@
                         style="display: inline-block"
                         class="upload-demo"
                         :action="imgUrl"
+                        accept="image/*"
+                        :before-upload="beforeImgUpload"
                         :on-success="successImg2"
                         :on-error="errorImg2"
                         :show-file-list="false"
@@ -268,13 +272,7 @@
         data: {
             activeName:'2',
             newsList: [
-                {
-                    time: '2016-05-03',
-                    title: '王小虎',
-                    content: '上海市普陀区金沙江路 1516 弄',
-                    imgPath:'www.baidu.com',
-                    live:'0'
-                }
+
             ],
             eneditor:'',
             ruleForm: {

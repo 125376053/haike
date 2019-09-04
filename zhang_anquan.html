@@ -146,6 +146,8 @@
                         style="display: inline-block"
                         class="upload-demo"
                         :action="imgUrl"
+                        accept="image/*"
+                        :before-upload="beforeImgUpload"
                         :on-success="successImg"
                         :on-error="errorImg"
                         :show-file-list="false"
@@ -204,6 +206,8 @@
                         style="display: inline-block"
                         class="upload-demo"
                         :action="imgUrl"
+                        accept="image/*"
+                        :before-upload="beforeImgUpload"
                         :on-success="successImg2"
                         :on-error="errorImg2"
                         :show-file-list="false"
@@ -309,6 +313,7 @@
                         }
                         var dataNew = {
                             ...this.ruleForm,
+                            content:this.eneditor.txt.html()
                         }
                         console.log(dataNew);
                         $.ajax({
@@ -341,7 +346,7 @@
                         }
                         var dataNew = {
                             ...this.editObj,
-                            //content:this.eneditor.txt.html()
+                            content:this.eneditor.txt.html()
                         }
                         console.log(dataNew);
                         $.ajax({

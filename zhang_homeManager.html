@@ -149,6 +149,8 @@
                         style="display: inline-block"
                         class="upload-demo"
                         :action="imgUrl"
+                        accept="image/*"
+                        :before-upload="beforeImgUpload"
                         :on-success="successImg"
                         :on-error="errorImg"
                         :show-file-list="false"
@@ -207,6 +209,8 @@
                         style="display: inline-block"
                         class="upload-demo"
                         :action="imgUrl"
+                        accept="image/*"
+                        :before-upload="beforeImgUpload"
                         :on-success="successImg2"
                         :on-error="errorImg2"
                         :show-file-list="false"
@@ -252,15 +256,7 @@
         mixins: [pub],
         data: {
             newsList: [
-                {
-                    time: '2016-05-03',
-                    title: '王小虎',
-                    content: '上海市普陀区金沙江路 1516 弄',
-                    imgPath:'www.baidu.com',
-                    detail:'<p>123</p>',
-                    selectOtherShow:'3',
-                    live: '0',// 0展示绿色 1 冻结红色
-                }
+
             ],
             ruleForm: {
                 content:'',
@@ -312,7 +308,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        if(this.newsList.length>=4){
+                        if(this.newsList.length>=5){
                             this.$message({
                                 type:'error',
                                 message:'最多只能添加5个'
@@ -345,6 +341,13 @@
             update(){
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
+                        if(this.newsList.length>=5){
+                            this.$message({
+                                type:'error',
+                                message:'最多只能添加5个'
+                            })
+                            return
+                        }
                         var dataNew = {
                             ...this.editObj,
                             //content:this.eneditor.txt.html()

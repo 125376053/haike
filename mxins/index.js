@@ -213,19 +213,21 @@ var pub = {
                 this.$refs.editForm.resetFields()
             })
         },
-        beforeUpload(file) {
-            /*console.log(file);
-            const isJPG = file.type === 'image/gif' || file.type === 'image/png' || file.type === 'image/jpg' ||  file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 500;
-
-            if (!isJPG) {
-                this.$message.error('上传文件只能是图片格式!');
-            }
+        beforeImgUpload(file) {
+            console.log(file);
+            const isLt2M = file.size / 1024 / 1024 < 1;
             if (!isLt2M) {
-                this.$message.error('上传文件不能超过500KB!');
+                this.$message.error('上传图片不能超过1MB!');
             }
-            return isJPG && isLt2M;*/
-            return
+            return isLt2M;
+        },
+        beforeVideoUpload(file) {
+            console.log(file);
+            const isLt2M = file.size / 1024 / 1024 < 5;
+            if (!isLt2M) {
+                this.$message.error('上传视频不能超过5MB!');
+            }
+            return isLt2M;
         },
         /*changeStatus(status){
             console.log(status);
