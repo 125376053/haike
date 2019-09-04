@@ -243,7 +243,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        if(this.eneditor.txt.text()==''){
+                        if(this.eneditor.txt.html()=='<p><br></p>'){
                             this.$message({
                                 type:'error',
                                 message:'编辑器内容不能为空'
@@ -276,7 +276,7 @@
             update(){
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
-                        if(this.eneditor.txt.text()==''){
+                        if(this.eneditor.txt.html()=='<p><br></p>'){
                             this.$message({
                                 type:'error',
                                 message:'编辑器内容不能为空'

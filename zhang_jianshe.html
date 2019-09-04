@@ -339,13 +339,13 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        /*if(this.eneditor.txt.text()==''){
+                        if(this.eneditor.txt.html()=='<p><br></p>'){
                             this.$message({
                                 type:'error',
                                 message:'编辑器内容不能为空'
                             })
                             return
-                        }*/
+                        }
                         var dataNew = {
                                 ...this.ruleForm,
                             //content:this.eneditor.txt.html()
@@ -372,13 +372,13 @@
             update(){
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
-                        /*if(this.eneditor.txt.text()==''){
+                        if(this.eneditor.txt.html()=='<p><br></p>'){
                             this.$message({
                                 type:'error',
                                 message:'编辑器内容不能为空'
                             })
                             return
-                        }*/
+                        }
                         var dataNew = {
                                 ...this.editObj,
                             //content:this.eneditor.txt.html()

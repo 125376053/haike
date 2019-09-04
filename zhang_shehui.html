@@ -99,7 +99,13 @@
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
-
+            <el-table-column
+                    prop="url"
+                    label="链接"
+                    width="180"
+                    :show-overflow-tooltip="true"
+            >
+            </el-table-column>
 
             <el-table-column
                     prop="education"
@@ -166,7 +172,9 @@
     <!--新建-->
     <el-dialog title="新建" :visible.sync="dialogVisible" width="800px">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-
+            <el-form-item label="链接" prop="url">
+                <el-input type="text" v-model="ruleForm.url"></el-input>
+            </el-form-item>
             <el-form-item label="标题" prop="title">
                 <el-input type="text" v-model="ruleForm.title"></el-input>
             </el-form-item>
@@ -227,7 +235,9 @@
     <!--编辑-->
     <el-dialog title="编辑" :visible.sync="dialogVisible1" width="800px">
         <el-form :model="editObj" :rules="editRules" ref="editForm" label-width="100px" class="demo-ruleForm">
-
+            <el-form-item label="链接" prop="url">
+                <el-input type="text" v-model="editObj.url"></el-input>
+            </el-form-item>
             <el-form-item label="标题" prop="title">
                 <el-input type="text" v-model="editObj.title"></el-input>
             </el-form-item>
