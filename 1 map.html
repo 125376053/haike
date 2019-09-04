@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=luSj6MUEG85cfUL7mFMzZEHQ"></script>
+    <script src="./element/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="allmap" style="width: 500px;height:300px;"></div>
+        <ul>
+            <li @click="position($event)">北京市海淀区上地3街</li>
+            <li @click="position($event)">西三旗金榜园小区</li>
+            <li @click="position($event)">山西闻喜县畖底镇西颜村</li>
+        </ul>
+    </div>
+</body>
+</html>
+
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            address:'北京市海淀区上地3街'
+        },
+        mounted(){
+            this.map()
+        },
+        methods:{
+            position(e){
+                var address = e.target.innerHTML
+                console.log(address);
+                this.address = address
+                this.map()
+            },
+            map(){
+                // 百度地图API功能
+                var map = new BMap.Map("allmap");
+                var point = new BMap.Point(116.331398,39.897445);
+                map.centerAndZoom(point,12);
+                // 创建地址解析器实例
+                var myGeo = new BMap.Geocoder();
+                // 将地址解析结果显示在地图上,并调整地图视野
+                myGeo.getPoint(this.address, function(point){
+                    if (point) {
+                        console.log(point);
+                        map.centerAndZoom(point, 16);
+                        map.addOverlay(new BMap.Marker(point));
+                    }else{
+                        alert("您选择地址没有解析到结果!");
+                    }
+                });
+            }
+        }
+    })
+</script>
