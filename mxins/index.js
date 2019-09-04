@@ -163,7 +163,7 @@ var pub = {
         // 视频地址 新建
         successVideo(response, file, fileList){
             console.log(response, file, fileList);
-            this.ruleForm.videoPath = api+response.data
+            this.ruleForm.videoPath = api+'/'+response.data
         },
         errorVideo(error, file, fileList){
             console.log(error, file, fileList);
@@ -172,7 +172,7 @@ var pub = {
         // 视频地址 更新
         successVideo2(response, file, fileList){
             console.log(response, file, fileList);
-            this.editObj.videoPath = api+response.data
+            this.editObj.videoPath = api+'/'+response.data
         },
         errorVideo2(error, file, fileList){
             console.log(error, file, fileList);
