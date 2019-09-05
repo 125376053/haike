@@ -109,6 +109,17 @@
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
+
+            <el-table-column
+                    prop="live"
+                    label="状态"
+                    :show-overflow-tooltip="true"
+            >
+                <template slot-scope="scope">
+                    {{scope.row.live==0?'展示':'冻结'}}
+                </template>
+            </el-table-column>
+
             <el-table-column
                     label="操作"
                     width="150px"
@@ -156,7 +167,7 @@
                         :disabled="true"
                         style="width:500px;"
                         v-model="ruleForm.videoPath"
-                        placeholder ="请上传视频"
+                        placeholder="请上传视频"
                 ></el-input>
                 <!--:show-file-list="false"-->
                 <el-upload
@@ -184,7 +195,7 @@
             </el-form-item>-->
 
 
-            <el-form-item label="备注" prop="comment" >
+            <el-form-item label="备注" prop="comment">
                 <el-input type="textarea" v-model="ruleForm.comment"></el-input>
             </el-form-item>
 
@@ -218,7 +229,7 @@
             </el-form-item>
 
             <el-form-item label="视频路径" prop="videoPath"
-              :rules="[
+                          :rules="[
                 { required: true, message: '路径不能为空',trigger: 'change'},
                 { pattern: /.mp4$/,message: '只能是MP4格式文件',trigger: 'change'}
               ]">
@@ -226,7 +237,7 @@
                         :disabled="true"
                         style="width:500px;"
                         v-model="editObj.videoPath"
-                        placeholder ="请上传视频"
+                        placeholder="请上传视频"
                 ></el-input>
                 <!--:show-file-list="false"-->
                 <el-upload
@@ -254,7 +265,7 @@
                 ></el-date-picker>
             </el-form-item>-->
 
-            <el-form-item label="备注" prop="comment" >
+            <el-form-item label="备注" prop="comment">
                 <el-input type="textarea" v-model="editObj.comment"></el-input>
             </el-form-item>
 
@@ -279,24 +290,22 @@
         el: '#app',
         mixins: [pub],
         data: {
-            newsList: [
-
-            ],
+            newsList: [],
             ruleForm: {
-                title:'',
-                comment:'',
-                time:new Date(),//new Date()
+                title: '',
+                comment: '',
+                time: new Date(),//new Date()
                 videoPath: '',
-                selectOtherShow:'1',
+                selectOtherShow: '1',
                 live: '1',// 0展示绿色 1 冻结红色
             },
             // 编辑对象 --- 编辑与新建不能使用同一套验证规则和字段 会引起意外
             editObj: {
-                title:'',
-                comment:'',
-                time:new Date(),//new Date()
+                title: '',
+                comment: '',
+                time: new Date(),//new Date()
                 videoPath: '',
-                selectOtherShow:'1',
+                selectOtherShow: '1',
                 live: '1',// 0展示绿色 1 冻结红色
             },
         },
@@ -308,8 +317,8 @@
             // 初始请求数据
             getData(){
                 $.ajax({
-                    url: api+`/haikeVideo/list/${this.page}/${this.pageCount}`, //数据接口
-                    success:(res)=>{
+                    url: api + `/haikeVideo/list/${this.page}/${this.pageCount}`, //数据接口
+                    success: (res) => {
                         console.log(typeof res);
                         var obj = JSON.parse(res);
                         console.log(obj);
@@ -321,7 +330,7 @@
             // 搜索
             searchFn(){
                 $.ajax({
-                    url: api + "/haikeVideo/query/"+this.search,
+                    url: api + "/haikeVideo/query/" + this.search,
                     success: (data) => {
                         console.log(data);
                         this.getData()
@@ -334,30 +343,36 @@
                     if (valid) {
 
                         //只有首页才限制3个视频
-                        if(this.newsList.length>=3 && this.selectOtherShow=='1'){
-                            this.$message({
-                                type:'error',
-                                message:'只能上传3个视频'
-                            })
-                            return
-                        }
-
-                        var dataNew = {
-                            ...this.ruleForm,
-                            //content:this.eneditor.txt.html()
-                        }
-                        console.log(dataNew);
-                        $.ajax({
-                            url: api + "/haikeVideo/insert",
-                            data: JSON.stringify(dataNew),
-                            type: "post",
-                            contentType:'text/plain;charset=UTF-8',
-                            success: (data) => {
-                                console.log(data);
-                                this.getData()
+                        var indexLength = []
+                        this.newsList.forEach(item => {
+                            if (item.selectOtherShow == 1 && item.live == 0) {
+                                console.log(item);
+                                indexLength.push(item)
                             }
-                        });
-                        this.dialogVisible = false
+                        })
+                        if (indexLength.length <3) {
+                            var dataNew = {
+                                ...this.ruleForm,
+                                //content:this.eneditor.txt.html()
+                            }
+                            console.log(dataNew);
+                            $.ajax({
+                                url: api + "/haikeVideo/insert",
+                                data: JSON.stringify(dataNew),
+                                type: "post",
+                                contentType: 'text/plain;charset=UTF-8',
+                                success: (data) => {
+                                    console.log(data);
+                                    this.getData()
+                                }
+                            });
+                            this.dialogVisible = false
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                message: '首页只能添加3个视频'
+                            })
+                        }
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -376,7 +391,7 @@
                             url: api + "/haikeVideo/update",
                             data: JSON.stringify(dataNew),
                             type: "post",
-                            contentType:'text/plain;charset=UTF-8',
+                            contentType: 'text/plain;charset=UTF-8',
                             success: (data) => {
                                 console.log(data);
                                 this.getData()
@@ -397,7 +412,7 @@
                     type: 'warning'
                 }).then(() => {
                     $.ajax({
-                        url: api + "/haikeVideo/delete/"+id,
+                        url: api + "/haikeVideo/delete/" + id,
                         success: (data) => {
                             this.$message({
                                 type: 'success',
