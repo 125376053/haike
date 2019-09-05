@@ -5,9 +5,9 @@ import java.util.Date;
 /**
  * 关于海科--荣誉奖项
  * @author yangshao516
- *
+ * honoraward
  */
-public class honor {
+public class HonorAward {
 	private Integer id;
 	private String title;//标题
 	private String imgPath;//图片路径

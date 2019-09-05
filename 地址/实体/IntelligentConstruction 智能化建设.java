@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class IntelligentConstruction {
 	private Integer id;
-	private String selectTitle;//选择标题（选择框）1--智能应用，2--自主研发，3--聚焦发展，4--遇见未来
+	private String selectTitle;//选择标题（选择框）0--全部 1--智能应用，2--自主研发，3--聚焦发展，4--遇见未来
 	private String content;//内容  建议使用编辑器
 	private String title;
 	private String imaPath;

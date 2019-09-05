@@ -1,4 +1,1 @@
 fadeInUp animated-fast
-
-1 奖项荣誉前端没有数据
-2 智能化建设 后台添加多个字段 前端只显示一个  intelligentConstruction

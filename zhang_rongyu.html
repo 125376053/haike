@@ -267,7 +267,7 @@
             // 初始请求数据
             getData(){
                 $.ajax({
-                    url: api+`/safetyManagement/list/${this.page}/${this.pageCount}`, //数据接口
+                    url: api+`/honorAward/list/${this.page}/${this.pageCount}`, //数据接口
                     success:(res)=>{
                         console.log(typeof res);
                         var obj = JSON.parse(res);
@@ -281,7 +281,7 @@
             // 搜索
             searchFn(){
                 $.ajax({
-                    url: api + "/safetyManagement/query/"+this.search,
+                    url: api + "/honorAward/query/"+this.search,
                     success: (data) => {
                         console.log(data);
                         this.getData()
@@ -297,7 +297,7 @@
                         }
                         console.log(dataNew);
                         $.ajax({
-                            url: api + "/safetyManagement/insert",
+                            url: api + "/honorAward/insert",
                             data: JSON.stringify(dataNew),
                             type: "post",
                             contentType:'text/plain;charset=UTF-8',
@@ -322,7 +322,7 @@
                         }
                         console.log(dataNew);
                         $.ajax({
-                            url: api + "/safetyManagement/update",
+                            url: api + "/honorAward/update",
                             data: JSON.stringify(dataNew),
                             type: "post",
                             contentType:'text/plain;charset=UTF-8',
@@ -346,7 +346,7 @@
                     type: 'warning'
                 }).then(() => {
                     $.ajax({
-                        url: api + "/safetyManagement/delete/"+id,
+                        url: api + "/honorAward/delete/"+id,
                         success: (data) => {
                             this.$message({
                                 type: 'success',
