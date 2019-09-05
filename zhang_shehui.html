@@ -298,7 +298,7 @@
                 time:new Date(),//new Date()
                 comment: '',
                 type:'1', // 社会招聘
-                //url:'',
+                url:'',
                 live: '0',
             },
             rules: {
@@ -310,7 +310,7 @@
                 title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
                 address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
                 content: [{ required: false, message: '请输入内容', trigger: 'blur' }],
-                //url:[{ required: true, message: '请输入链接', trigger: 'blur' }],
+                url:[{ required: true, message: '请输入链接', trigger: 'blur' }],
             },
             // 编辑对象 --- 编辑与新建不能使用同一套验证规则和字段 会引起意外
             editObj: {
@@ -325,7 +325,7 @@
                 time:new Date(),//new Date()
                 comment: '',
                 type:'1', // 社会招聘
-                //url:'',
+                url:'',
                 live: '0',
             },
             // 编辑规则
@@ -338,7 +338,7 @@
                 title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
                 address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
                 content: [{ required: false, message: '请输入内容', trigger: 'blur' }],
-                //url:[{ required: true, message: '请输入链接', trigger: 'blur' }],
+                url:[{ required: true, message: '请输入链接', trigger: 'blur' }],
             },
         },
         mounted(){

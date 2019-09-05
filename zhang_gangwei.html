@@ -111,12 +111,12 @@
                     :show-overflow-tooltip="true"
             >
             </el-table-column>
-            <el-table-column
+            <!--<el-table-column
                     prop="url"
                     label="链接"
                     :show-overflow-tooltip="true"
             >
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
                     prop="address"
                     label="工作地点"
@@ -176,9 +176,9 @@
                 <el-input type="text" v-model="ruleForm.title"></el-input>
             </el-form-item>
 
-            <el-form-item label="链接" prop="url">
+            <!--<el-form-item label="链接" prop="url">
                 <el-input type="text" v-model="ruleForm.url"></el-input>
-            </el-form-item>
+            </el-form-item>-->
 
             <el-form-item label="工作地点" prop="address">
                 <el-input type="text" v-model="ruleForm.address"></el-input>
@@ -230,10 +230,10 @@
                 <el-input type="text" v-model="editObj.title"></el-input>
             </el-form-item>
 
-            <el-form-item label="链接" prop="url">
+            <!--<el-form-item label="链接" prop="url">
                 <el-input type="text" v-model="editObj.url"></el-input>
             </el-form-item>
-
+-->
             <el-form-item label="工作地点" prop="address">
                 <el-input type="text" v-model="editObj.address"></el-input>
             </el-form-item>
@@ -291,7 +291,7 @@
             ],
             ruleForm: {
                 detail:'',
-                url:'',
+                //url:'',
                 yearSalary:'', //年薪
                 content:'', //招聘要求
                 title:'',
@@ -309,7 +309,7 @@
             },
             // 编辑对象 --- 编辑与新建不能使用同一套验证规则和字段 会引起意外
             editObj: {
-                url:'',
+                //url:'',
                 yearSalary:'', //年薪
                 content:'', //招聘要求
                 title:'',
